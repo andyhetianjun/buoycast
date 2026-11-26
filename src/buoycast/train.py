@@ -42,6 +42,23 @@ def per_station_mae(pred: np.ndarray, test: pd.DataFrame) -> dict[str, float]:
     return {s: float(v) for s, v in err.groupby(test["station"].to_numpy()).mean().items()}
 
 
+HEIGHT_BINS = [(0.0, 1.0), (1.0, 2.0), (2.0, 3.0), (3.0, 99.0)]
+
+
+def mae_by_height(preds: dict[str, np.ndarray], test: pd.DataFrame) -> dict[str, dict]:
+    """MAE grouped by the observed wave height at t+h, to see where each model struggles."""
+    true = test["target"].to_numpy()
+    out: dict[str, dict] = {}
+    for lo, hi in HEIGHT_BINS:
+        mask = (true >= lo) & (true < hi)
+        label = f"{lo:g}-{hi:g} m" if hi < 99 else f">{lo:g} m"
+        if mask.any():
+            out[label] = {"n": int(mask.sum())} | {
+                name: mae(p[mask], true[mask]) for name, p in preds.items()
+            }
+    return out
+
+
 def run(data: Path, out_dir: Path, seeds: int, epochs: int) -> dict:
     hourly = load_hourly(data)
     result: dict = {
@@ -59,12 +76,13 @@ def run(data: Path, out_dir: Path, seeds: int, epochs: int) -> dict:
         linear = LinearModel().fit(train)
         entry["linear"] = scores(linear.predict(test), test)
 
-        runs, station_runs, first = [], [], None
+        runs, station_runs, mlp_preds, first = [], [], [], None
         for seed in range(seeds):
             fc = train_mlp(train, val, seed=seed, epochs=epochs)
             pred = fc.predict(test)
             runs.append(scores(pred, test))
             station_runs.append(per_station_mae(pred, test))
+            mlp_preds.append(pred)
             first = first or fc
         entry["mlp"] = {
             k: {
@@ -78,6 +96,14 @@ def run(data: Path, out_dir: Path, seeds: int, epochs: int) -> dict:
             "linear": per_station_mae(linear.predict(test), test),
             "mlp": {s: float(np.mean([r[s] for r in station_runs])) for s in station_runs[0]},
         }
+        entry["mae_by_height"] = mae_by_height(
+            {
+                "persistence": persistence(test),
+                "linear": linear.predict(test),
+                "mlp": np.mean(mlp_preds, axis=0),
+            },
+            test,
+        )
         result["horizons"][str(h)] = entry
         assert first is not None
         save_bundle(out_dir / f"model_h{h}.pt", first, linear, h)  # seed 0 is served

@@ -11,9 +11,10 @@ from functools import lru_cache
 from pathlib import Path
 
 import pandas as pd
-from fastapi import FastAPI, HTTPException, Query
+from fastapi import Body, FastAPI, HTTPException, Query
 from fastapi.staticfiles import StaticFiles
 
+from . import geo
 from .features import build_features, load_hourly
 from .models import LinearModel, MLPForecaster, load_bundle
 from .paths import (
@@ -27,6 +28,7 @@ from .paths import (
 )
 
 HORIZONS = (3, 6)
+POLYGON_BODY = Body(..., description="a GeoJSON Polygon")
 FLAG_CODES = {"1": "pass", "2": "not evaluated", "3": "suspect", "4": "fail", "9": "missing"}
 
 
@@ -82,6 +84,42 @@ def create_app(data: Path = SAMPLE_PARQUET, artifacts: Path = ARTIFACTS) -> Fast
                 }
             )
         return out
+
+    def station_points() -> pd.DataFrame:
+        return geo.station_table(hourly)
+
+    def station_rows(df: pd.DataFrame) -> list[dict]:
+        cols = ["id", "name", "lat", "lon"] + (["distance_km"] if "distance_km" in df else [])
+        return [
+            {k: (round(v, 2) if k == "distance_km" else v) for k, v in r.items()}
+            for r in df[cols].to_dict("records")
+        ]
+
+    @app.get("/stations/bbox")
+    def stations_bbox(min_lon: float, min_lat: float, max_lon: float, max_lat: float) -> list[dict]:
+        """Stations inside a box. If min_lon is larger than max_lon the box crosses 180 degrees."""
+        try:
+            return station_rows(
+                geo.within_bbox(station_points(), min_lon, min_lat, max_lon, max_lat)
+            )
+        except ValueError as exc:
+            raise HTTPException(422, str(exc)) from exc
+
+    @app.get("/stations/nearest")
+    def stations_nearest(lat: float, lon: float, k: int = Query(1, ge=1, le=10)) -> list[dict]:
+        """The k stations closest to a position, with distance in km."""
+        try:
+            return station_rows(geo.nearest(station_points(), lat, lon, k))
+        except ValueError as exc:
+            raise HTTPException(422, str(exc)) from exc
+
+    @app.post("/stations/within")
+    def stations_within(polygon: dict = POLYGON_BODY) -> list[dict]:
+        """Stations inside a polygon given as GeoJSON (coordinates are [lon, lat])."""
+        try:
+            return station_rows(geo.within_polygon(station_points(), polygon))
+        except (ValueError, KeyError, TypeError, IndexError) as exc:
+            raise HTTPException(422, f"bad polygon: {exc}") from exc
 
     @app.get("/observations")
     def observations(

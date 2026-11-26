@@ -32,10 +32,11 @@ from dataclasses import dataclass
 import numpy as np
 import pandas as pd
 
+from .geo import distance_km
+
 PASS, NOT_EVALUATED, SUSPECT, FAIL, MISSING = 1, 2, 3, 4, 9
 TESTS = ("gross_range", "spike", "rate_of_change", "flat_line", "gap")
 TRACK_TESTS = ("location_range", "track_speed")
-EARTH_RADIUS_KM = 6371.0
 
 
 @dataclass(frozen=True)
@@ -207,16 +208,6 @@ def run_platform(df: pd.DataFrame, config: dict[str, VarConfig] = BUOY_CONFIG) -
         if var in df.columns:
             parts.append(run_variable(df[var], cfg).add_prefix(f"{var}_"))
     return pd.concat(parts, axis=1) if parts else pd.DataFrame(index=df.index)
-
-
-def distance_km(lat1, lon1, lat2, lon2) -> np.ndarray:
-    """Great-circle distance (haversine)."""
-    p1, p2 = np.deg2rad(lat1), np.deg2rad(lat2)
-    a = (
-        np.sin((p2 - p1) / 2) ** 2
-        + np.cos(p1) * np.cos(p2) * np.sin(np.deg2rad(lon2 - lon1) / 2) ** 2
-    )
-    return 2 * EARTH_RADIUS_KM * np.arcsin(np.sqrt(a))
 
 
 def run_track(df: pd.DataFrame, cfg: TrackConfig = TrackConfig()) -> pd.DataFrame:

@@ -13,6 +13,7 @@ dependencies = [
     "numpy>=2.5.5",
     "pandas>=3.1.1",
     "pyarrow>=26.0.1",
+    "shapely>=2.2.0",
     "torch>=2.15.0",
     "uvicorn[standard]>=0.54.0",
 ]
@@ -26,6 +27,7 @@ buoycast-drifters = "buoycast.drifters:main"
 buoycast-qc = "buoycast.qc_run:main"
 buoycast-verify = "buoycast.verify:main"
 buoycast-extra = "buoycast.extra_run:main"
+buoycast-export = "buoycast.geo:main"
 
 [build-system]
 requires = ["uv_build>=0.12.19,<0.13.0"]
@@ -33,6 +35,7 @@ build-backend = "uv_build"
 
 [dependency-groups]
 dev = [
+    "geopandas>=1.2.0",
     "pytest>=9.2.0",
     "ruff>=0.17.6",
 ]

@@ -76,9 +76,7 @@ def run(data: Path, out_dir: Path, seeds: int, epochs: int) -> dict:
         entry["per_station_mae"] = {
             "persistence": per_station_mae(persistence(test), test),
             "linear": per_station_mae(linear.predict(test), test),
-            "mlp": {
-                s: float(np.mean([r[s] for r in station_runs])) for s in station_runs[0]
-            },
+            "mlp": {s: float(np.mean([r[s] for r in station_runs])) for s in station_runs[0]},
         }
         result["horizons"][str(h)] = entry
         assert first is not None
@@ -93,10 +91,13 @@ def format_table(result: dict) -> str:
         "|---|---|---|---|",
     ]
     for h, e in result["horizons"].items():
-        lines.append(f"| {h} h | Persistence | {e['persistence']['mae']:.3f} | "
-                     f"{e['persistence']['rmse']:.3f} |")
-        lines.append(f"| {h} h | Linear regression | {e['linear']['mae']:.3f} | "
-                     f"{e['linear']['rmse']:.3f} |")
+        lines.append(
+            f"| {h} h | Persistence | {e['persistence']['mae']:.3f} | "
+            f"{e['persistence']['rmse']:.3f} |"
+        )
+        lines.append(
+            f"| {h} h | Linear regression | {e['linear']['mae']:.3f} | {e['linear']['rmse']:.3f} |"
+        )
         m = e["mlp"]
         lines.append(
             f"| {h} h | MLP (mean of {result['seeds']} seeds) | "

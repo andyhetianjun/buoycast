@@ -42,9 +42,7 @@ def feature_names() -> list[str]:
     return names
 
 
-def build_features(
-    hourly: pd.DataFrame, horizon: int, require_target: bool = True
-) -> pd.DataFrame:
+def build_features(hourly: pd.DataFrame, horizon: int, require_target: bool = True) -> pd.DataFrame:
     """Features for every hour of one station, plus `target` (wvht at t+horizon).
 
     Rows with any missing feature are dropped, and so are rows with a missing target

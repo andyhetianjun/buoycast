@@ -1,10 +1,14 @@
 """Build the static demo site: the map page plus all its data as plain JSON files.
 
-Usage: uv run buoycast-site [--out site]
+Usage: uv run buoycast-site [--out site] [--live]
 
 Nothing is computed in the browser or on a server. This script runs the models and
-the quality checks once, over the committed sample, and writes the results next to
-a copy of the map page (web/). Any static host can serve the folder.
+the quality checks once and writes the results next to a copy of the map page
+(web/). Any static host can serve the folder.
+
+By default it uses the committed sample (2022 to 2024). With --live it downloads the
+latest NDBC observations first and forecasts from them; if NDBC cannot be reached
+it falls back to the sample and says so on the page.
 """
 
 from __future__ import annotations
@@ -12,12 +16,13 @@ from __future__ import annotations
 import argparse
 import json
 import shutil
+from collections.abc import Callable
 from datetime import UTC, datetime
 from pathlib import Path
 
 import pandas as pd
 
-from . import drifters, qc, verify
+from . import drifters, live, qc, verify
 from .features import TEST_START, load_hourly
 from .paths import (
     QC_SUMMARY_JSON,
@@ -76,13 +81,18 @@ def flag_events(flags: pd.DataFrame, limit: int = 40) -> tuple[list[dict], int]:
     return events[:limit], len(events)
 
 
-def station_payload(station: str, frame: pd.DataFrame, leads: dict[int, pd.DataFrame]) -> dict:
+def station_payload(
+    station: str,
+    frame: pd.DataFrame,
+    leads: dict[int, pd.DataFrame],
+    names: dict[str, dict[str, object]] = STATIONS,
+) -> dict:
     flags = qc.run_platform(frame)
     start = frame.index[0]
     events, n_events = flag_events(flags)
     payload = {
         "id": station,
-        **STATIONS[station],
+        **names[station],
         "start": start.strftime("%Y-%m-%dT%H:%M:%SZ"),
         "hours": len(frame),
         "wvht": _series(frame["wvht"], 2),
@@ -105,7 +115,7 @@ def station_payload(station: str, frame: pd.DataFrame, leads: dict[int, pd.DataF
     if forecasts:
         out = {"offset": offset}
         for lead, f in forecasts.items():
-            size = len(frame) - offset
+            size = max(len(frame), int(f["idx"].max()) + 1) - offset
             arrays = {m: [None] * size for m in ("mlp", "linear", "persistence")}
             for m in arrays:
                 for i, v in zip(f["idx"], f["t"][m].to_numpy(), strict=True):
@@ -115,35 +125,126 @@ def station_payload(station: str, frame: pd.DataFrame, leads: dict[int, pd.DataF
     return payload
 
 
-def build_site(out: Path = SITE_DIR) -> dict[str, int]:
+def _live_stations(
+    frames: dict[str, pd.DataFrame], now: pd.Timestamp
+) -> tuple[dict[str, dict], list[dict], dict]:
+    """Payloads, index entries and the recent track record for the live stations."""
+    models = live.Models.load()
+    tables: dict[str, dict[int, pd.DataFrame]] = {}
+    for sid, frame in frames.items():
+        tables[sid] = {h: live.forecast_frame(sid, frame, models, h) for h in live.HORIZONS}
+    payloads, index = {}, []
+    for sid, frame in frames.items():
+        leads = {}
+        for h, t in tables[sid].items():
+            leads[h] = t.assign(station=sid)
+        last = live.latest(frame)
+        frame = frame.loc[:last]
+        payload = station_payload(sid, frame, leads, live.LIVE_STATIONS)
+        age = (now - last) / pd.Timedelta(hours=1)
+        current = (
+            not tables[sid][3].empty
+            and tables[sid][3]["issued"].max() == last
+            and age <= live.FRESH_HOURS
+        )
+        payload.update({"online": age <= live.FRESH_HOURS, "trained": sid in live.TRAINED})
+        payloads[sid] = payload
+        index.append(
+            {
+                "id": sid,
+                "name": live.LIVE_STATIONS[sid]["name"],
+                "lat": live.LIVE_STATIONS[sid]["lat"],
+                "lon": live.LIVE_STATIONS[sid]["lon"],
+                "start": payload["start"],
+                "hours": payload["hours"],
+                "has_forecast": "forecast" in payload,
+                "current_forecast": bool(current),
+                "online": payload["online"],
+                "trained": payload["trained"],
+                "age_hours": round(float(age), 1),
+            }
+        )
+    return payloads, index, live.hindcast_scores(tables)
+
+
+def build_site(
+    out: Path = SITE_DIR,
+    use_live: bool = False,
+    fetch: Callable[[], dict[str, pd.DataFrame]] = live.fetch_all,
+) -> dict[str, int]:
     """Write the site folder. Returns the size in bytes of each data file."""
     if out.exists():
         shutil.rmtree(out)
     (out / "data").mkdir(parents=True)
     for name in ("index.html", "style.css", "app.js"):
         shutil.copy(WEB_DIR / name, out / name)
+    now = pd.Timestamp.now(tz="UTC").floor("1h")
     built = datetime.now(UTC).strftime("%Y-%m-%d")
-    (out / "config.js").write_text(
-        f'window.BUOYCAST_STATIC = true;\nwindow.BUOYCAST_BUILT = "{built}";\n'
-    )
 
-    hourly = load_hourly()
-    leads = {h: verify.forecast_table(horizon=h) for h in verify.HORIZONS}
-    index = []
-    for station, frame in hourly.items():
-        payload = station_payload(station, frame, leads)
-        (out / "data" / f"{station}.json").write_text(json.dumps(payload, separators=(",", ":")))
-        index.append(
-            {
-                "id": station,
-                "name": STATIONS[station]["name"],
-                "lat": STATIONS[station]["lat"],
-                "lon": STATIONS[station]["lon"],
-                "start": payload["start"],
-                "hours": payload["hours"],
-                "has_forecast": "forecast" in payload,
-            }
-        )
+    frames: dict[str, pd.DataFrame] = {}
+    mode = "sample"
+    if use_live:
+        frames = {
+            sid: f for sid, f in fetch().items() if f["wvht"].notna().any()
+        }  # a buoy with no wave readings at all cannot be forecast
+        mode = "live" if frames else "sample-fallback"
+
+    hindcast: dict = {}
+    if frames:
+        payloads, index, hindcast = _live_stations(frames, now)
+        tracks: list[dict] = []
+        for sid, payload in payloads.items():
+            (out / "data" / f"{sid}.json").write_text(json.dumps(payload, separators=(",", ":")))
+    else:
+        payloads = {}
+        hourly = load_hourly()
+        leads = {h: verify.forecast_table(horizon=h) for h in verify.HORIZONS}
+        index = []
+        for station, frame in hourly.items():
+            payload = station_payload(station, frame, leads)
+            (out / "data" / f"{station}.json").write_text(
+                json.dumps(payload, separators=(",", ":"))
+            )
+            index.append(
+                {
+                    "id": station,
+                    "name": STATIONS[station]["name"],
+                    "lat": STATIONS[station]["lat"],
+                    "lon": STATIONS[station]["lon"],
+                    "start": payload["start"],
+                    "hours": payload["hours"],
+                    "has_forecast": "forecast" in payload,
+                    "current_forecast": "forecast" in payload,
+                    "online": True,
+                    "trained": True,
+                }
+            )
+        tracks = _drifter_tracks()
+    site = {
+        "mode": mode,
+        "built": built,
+        "built_utc": datetime.now(UTC).strftime("%Y-%m-%d %H:%M"),
+        "source": "NDBC realtime files" if mode == "live" else "committed sample (2022 to 2024)",
+        "missing": sorted(set(live.LIVE_STATIONS) - set(frames)) if mode == "live" else [],
+    }
+    (out / "config.js").write_text(
+        f"window.BUOYCAST_STATIC = true;\nwindow.BUOYCAST_SITE = {json.dumps(site)};\n"
+    )
+    meta = {
+        "built": built,
+        "site": site,
+        "test_start": TEST_START.strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "stations": index,
+        "drifters": tracks,
+        "hindcast": hindcast,
+        "verification": json.loads(VERIFICATION_JSON.read_text()),
+        "qc": json.loads(QC_SUMMARY_JSON.read_text()),
+    }
+    (out / "data" / "index.json").write_text(json.dumps(meta, separators=(",", ":")))
+    return {p.name: p.stat().st_size for p in sorted((out / "data").glob("*.json"))}
+
+
+def _drifter_tracks() -> list[dict]:
     tracks = []
     for name, frame in drifters.load_drifters().items():
         flags = pd.concat([qc.run_platform(frame, qc.DRIFTER_CONFIG), qc.run_track(frame)], axis=1)
@@ -163,24 +264,18 @@ def build_site(out: Path = SITE_DIR) -> dict[str, int]:
                 "last": frame.index[-1].strftime("%Y-%m-%d"),
             }
         )
-    meta = {
-        "built": built,
-        "test_start": TEST_START.strftime("%Y-%m-%dT%H:%M:%SZ"),
-        "stations": index,
-        "drifters": tracks,
-        "verification": json.loads(VERIFICATION_JSON.read_text()),
-        "qc": json.loads(QC_SUMMARY_JSON.read_text()),
-    }
-    (out / "data" / "index.json").write_text(json.dumps(meta, separators=(",", ":")))
-    return {p.name: p.stat().st_size for p in sorted((out / "data").glob("*.json"))}
+    return tracks
 
 
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--out", type=Path, default=SITE_DIR)
+    ap.add_argument("--live", action="store_true", help="fetch the latest NDBC observations")
     args = ap.parse_args()
-    sizes = build_site(args.out)
+    sizes = build_site(args.out, use_live=args.live)
+    mode = json.loads((args.out / "data" / "index.json").read_text())["site"]["mode"]
     total = sum(sizes.values())
+    print(f"mode: {mode}")
     print(f"wrote {args.out} ({len(sizes)} data files, {total / 1e6:.1f} MB before compression)")
 
 

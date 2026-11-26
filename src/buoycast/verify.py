@@ -26,7 +26,7 @@ import pandas as pd
 from .features import build_all, load_hourly, split_by_time
 from .models import load_bundle as load_models
 from .models import persistence
-from .paths import ARTIFACTS, SAMPLE_PARQUET, VERIFICATION_JSON
+from .paths import SAMPLE_PARQUET, VERIFICATION_JSON, WEIGHTS
 
 METHODS = ("persistence", "linear", "mlp")
 HORIZONS = (3, 6)
@@ -41,12 +41,12 @@ def bin_label(lo: float, hi: float) -> str:
 
 
 def forecast_table(
-    data: Path = SAMPLE_PARQUET, artifacts: Path = ARTIFACTS, horizon: int = 3
+    data: Path = SAMPLE_PARQUET, weights: Path = WEIGHTS, horizon: int = 3
 ) -> pd.DataFrame:
     """One row per test-period forecast with the observation and each method's forecast."""
     hourly = load_hourly(data)
     _, _, test = split_by_time(build_all(hourly, horizon), horizon)
-    mlp, lin = load_models(artifacts / f"model_h{horizon}.pt")
+    mlp, lin = load_models(weights / f"model_h{horizon}.pt")
     out = pd.DataFrame(
         {
             "station": test["station"].to_numpy(),
@@ -125,7 +125,7 @@ def verdict_for(n: int, lo: float, hi: float) -> str:
     return "no clear difference from persistence"
 
 
-def verify(data: Path = SAMPLE_PARQUET, artifacts: Path = ARTIFACTS, seed: int = 0) -> dict:
+def verify(data: Path = SAMPLE_PARQUET, weights: Path = WEIGHTS, seed: int = 0) -> dict:
     result: dict = {
         "period": "2024-07-01 to 2024-12-31 (UTC)",
         "methods": list(METHODS),
@@ -137,7 +137,7 @@ def verify(data: Path = SAMPLE_PARQUET, artifacts: Path = ARTIFACTS, seed: int =
     }
     for h in HORIZONS:
         rng = np.random.default_rng(seed + h)
-        t = forecast_table(data, artifacts, h)
+        t = forecast_table(data, weights, h)
         by_height = []
         for lo, hi in BINS:
             g = t[(t["height_now"] >= lo) & (t["height_now"] < hi)]

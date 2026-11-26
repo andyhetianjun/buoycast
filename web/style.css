@@ -39,8 +39,11 @@ span.cell.pass { background: var(--pass); } span.cell.suspect { background: var(
 #events { list-style: none; padding: 0; margin: 0; font-size: 13px; }
 #events li { padding: 2px 0; }
 button.link { font: inherit; font-size: 13px; background: none; border: 0; padding: 0; color: #0b5c9e; text-align: left; cursor: pointer; text-decoration: underline; }
-#report { padding: 18px 20px; background: #f7f9fb; border-top: 1px solid var(--line); max-width: 1100px; }
+#report, #live-report { padding: 18px 20px; background: #f7f9fb; border-top: 1px solid var(--line); max-width: 1100px; }
 #report h2 { margin-top: 18px; }
+#live-report { border-top: 1px solid var(--line); }
+#live-report h2 { margin: 0 0 6px; }
+.vtable tr.group-row td { font-weight: 600; background: #eef2f5; }
 .vtable { background: #fff; margin: 10px 0; }
 .vtable th.group { background: #eef2f5; font-size: 12px; text-transform: none; color: var(--muted); }
 .vtable tr.selected td { background: #fff6df; }

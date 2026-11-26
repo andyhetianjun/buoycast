@@ -1,7 +1,7 @@
 """Train and evaluate: persistence vs linear regression vs a small MLP.
 
 Usage:
-    uv run buoycast-train            # full run: 5 seeds, writes artifacts/
+    uv run buoycast-train            # full run: 5 seeds, writes artifacts/ and the model files
     uv run buoycast-train --quick    # tiny run for CI, writes to a temp dir
 """
 
@@ -19,7 +19,7 @@ import torch
 
 from .features import TEST_START, VAL_START, build_all, load_hourly, split_by_time
 from .models import LinearModel, persistence, save_bundle, train_mlp
-from .paths import ARTIFACTS, SAMPLE_PARQUET
+from .paths import ARTIFACTS, SAMPLE_PARQUET, WEIGHTS
 
 HORIZONS = (3, 6)
 
@@ -59,7 +59,10 @@ def mae_by_height(preds: dict[str, np.ndarray], test: pd.DataFrame) -> dict[str,
     return out
 
 
-def run(data: Path, out_dir: Path, seeds: int, epochs: int) -> dict:
+def run(
+    data: Path, out_dir: Path, seeds: int, epochs: int, weights_dir: Path | None = None
+) -> dict:
+    weights_dir = weights_dir or out_dir
     hourly = load_hourly(data)
     result: dict = {
         "split": {"val_start": str(VAL_START), "test_start": str(TEST_START)},
@@ -67,6 +70,7 @@ def run(data: Path, out_dir: Path, seeds: int, epochs: int) -> dict:
         "horizons": {},
     }
     out_dir.mkdir(parents=True, exist_ok=True)
+    weights_dir.mkdir(parents=True, exist_ok=True)
     for h in HORIZONS:
         train, val, test = split_by_time(build_all(hourly, h), h)
         entry: dict = {"rows": {"train": len(train), "val": len(val), "test": len(test)}}
@@ -106,7 +110,7 @@ def run(data: Path, out_dir: Path, seeds: int, epochs: int) -> dict:
         )
         result["horizons"][str(h)] = entry
         assert first is not None
-        save_bundle(out_dir / f"model_h{h}.pt", first, linear, h)  # seed 0 is served
+        save_bundle(weights_dir / f"model_h{h}.pt", first, linear, h)  # seed 0 is served
     (out_dir / "metrics.json").write_text(json.dumps(result, indent=2) + "\n")
     return result
 
@@ -142,12 +146,12 @@ def main() -> None:
     args = ap.parse_args()
 
     torch.set_num_threads(max(1, min(4, torch.get_num_threads())))
-    out_dir = ARTIFACTS
+    out_dir, weights_dir = ARTIFACTS, WEIGHTS
     if args.quick:
         args.seeds, args.epochs = 1, 2
-        out_dir = Path(tempfile.mkdtemp(prefix="buoycast-"))
+        out_dir = weights_dir = Path(tempfile.mkdtemp(prefix="buoycast-"))
     start = time.time()
-    result = run(args.data, out_dir, args.seeds, args.epochs)
+    result = run(args.data, out_dir, args.seeds, args.epochs, weights_dir)
     print(format_table(result))
     print(f"\nwrote {out_dir} in {time.time() - start:.0f}s")
 

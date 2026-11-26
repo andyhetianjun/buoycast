@@ -18,13 +18,13 @@ from . import geo
 from .features import build_features, load_hourly
 from .models import LinearModel, MLPForecaster, load_bundle
 from .paths import (
-    ARTIFACTS,
     QC_FLAGS_PARQUET,
     QC_SUMMARY_JSON,
     SAMPLE_PARQUET,
     STATIONS,
     VERIFICATION_JSON,
     WEB_DIR,
+    WEIGHTS,
 )
 
 HORIZONS = (3, 6)
@@ -49,12 +49,12 @@ def parse_time(value: str) -> pd.Timestamp:
     return ts.floor("1h")
 
 
-def create_app(data: Path = SAMPLE_PARQUET, artifacts: Path = ARTIFACTS) -> FastAPI:
+def create_app(data: Path = SAMPLE_PARQUET, weights: Path = WEIGHTS) -> FastAPI:
     app = FastAPI(title="buoycast", version="0.1.0")
     hourly = load_hourly(data)
     models: dict[int, tuple[MLPForecaster, LinearModel]] = {}
     for h in HORIZONS:
-        path = artifacts / f"model_h{h}.pt"
+        path = weights / f"model_h{h}.pt"
         if path.exists():
             models[h] = load_bundle(path)
 

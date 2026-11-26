@@ -19,6 +19,7 @@ dependencies = [
 ]
 
 [project.scripts]
+buoycast = "buoycast.cli:main"
 buoycast-download = "buoycast.download:main"
 buoycast-train = "buoycast.train:main"
 buoycast-serve = "buoycast.api:serve"

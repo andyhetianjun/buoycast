@@ -2,6 +2,8 @@
 //  - server mode: reads the FastAPI endpoints (buoycast-serve)
 //  - static mode: reads precomputed JSON files in data/ (buoycast-site), no server needed
 const STATIC = !!window.BUOYCAST_STATIC;
+const SITE = window.BUOYCAST_SITE || {};
+const LIVE = SITE.mode === "live";
 const state = { station: null, stations: [], meta: null, cache: {} };
 const $ = (id) => document.getElementById(id);
 const SVG = "http://www.w3.org/2000/svg";
@@ -130,18 +132,29 @@ async function init() {
   if (STATIC) {
     const b = $("banner");
     b.hidden = false;
-    b.textContent = `Demo: everything here is precomputed from the sample data committed to the repository (built ${window.BUOYCAST_BUILT}). ` +
-      "There is no server. The forecasts and quality flags were calculated once when the site was built, and the data runs from 2022 to 2024, not live.";
+    if (LIVE) {
+      b.textContent = `Live data: the latest NOAA buoy observations, fetched ${SITE.built_utc} UTC (source: ${SITE.source}). ` +
+        "This page is rebuilt every hour. There is no server: the forecasts and quality flags were calculated at that time by a model trained on 2022 to 2023 data.";
+    } else {
+      const why = SITE.mode === "sample-fallback"
+        ? "The live NOAA files could not be reached when this page was built, so this is the committed sample instead. "
+        : "";
+      b.textContent = `${why}Demo: everything here is precomputed from the sample data committed to the repository (built ${SITE.built}). ` +
+        "There is no server. The forecasts and quality flags were calculated once when the site was built, and the data runs from 2022 to 2024, not live.";
+    }
   }
   state.stations = await loadStations();
   const pts = [];
   for (const s of state.stations) {
     const m = L.marker([s.lat, s.lon]).addTo(map);
-    m.bindTooltip(s.id);
+    if (s.online === false) m.setOpacity(0.45);
+    m.bindTooltip(s.id + (s.online === false ? " (no recent reading)" : ""));
+    s.marker = m;
     m.on("click", (ev) => { L.DomEvent.stopPropagation(ev); select(s); });
     pts.push([s.lat, s.lon]);
   }
   map.fitBounds(pts, { padding: [30, 30] });
+  if (STATIC) renderLiveReport();
   map.on("click", (ev) => {
     const n = nearestStation(ev.latlng.lat, ev.latlng.lng);
     L.popup()
@@ -154,6 +167,9 @@ async function init() {
   $("end").addEventListener("change", refresh);
   $("vlead").addEventListener("change", renderVerification);
   loadReport();
+  // Open on a station that has a current forecast (live), or one with test-period forecasts (sample).
+  const first = state.stations.find((s) => s.current_forecast && s.online !== false);
+  if (first) select(first);
 }
 
 function drawDrifters() {
@@ -168,9 +184,17 @@ function select(s) {
   $("hint").hidden = true;
   $("detail").hidden = false;
   $("name").textContent = `${s.id}: ${s.name}`;
-  $("meta").textContent = `Data from ${s.first_obs.slice(0, 10)} to ${s.last_obs.slice(0, 10)} (UTC)`;
-  // The precomputed forecasts need their outcome to exist, so the last few hours are not offered.
-  const lastEnd = STATIC ? new Date(Date.parse(s.last_obs) - 6 * HOUR).toISOString() : s.last_obs;
+  if (LIVE) {
+    const ago = s.age_hours < 1 ? "less than an hour ago" : `${Math.round(s.age_hours)} h before the page was built`;
+    $("meta").textContent = `Latest wave reading ${fmtTime(s.last_obs)} UTC (${ago}). ` + (s.trained
+      ? "The model was trained on this buoy."
+      : "This buoy was not in the training data, so its forecast is less reliable.");
+  } else {
+    $("meta").textContent = `Data from ${s.first_obs.slice(0, 10)} to ${s.last_obs.slice(0, 10)} (UTC)`;
+  }
+  // The precomputed forecasts need their outcome to exist, so the last few hours are not offered
+  // (except live, where the newest forecast is the point and has no outcome yet).
+  const lastEnd = STATIC && !LIVE ? new Date(Date.parse(s.last_obs) - 6 * HOUR).toISOString() : s.last_obs;
   $("end").value = toInput(lastEnd);
   $("end").min = toInput(s.first_obs);
   $("end").max = toInput(lastEnd);
@@ -187,7 +211,7 @@ async function refresh() {
   $("note").textContent = "";
   try {
     const view = await loadView(s, end, h);
-    renderForecast(view.fc);
+    renderForecast(view.fc, s);
     renderChart(view);
     renderStrips(view.strips);
   } catch (e) {
@@ -197,15 +221,23 @@ async function refresh() {
 
 // ---------- forecast table and chart ----------
 
-function renderForecast(fc) {
+function renderForecast(fc, s) {
   const body = document.querySelector("#fc tbody");
   body.replaceChildren();
   if (!fc) {
     const tr = body.insertRow();
     const td = tr.insertCell();
     td.colSpan = 4;
-    td.textContent = "No forecast for this hour (forecasts exist for July to December 2024 only).";
+    td.textContent = LIVE
+      ? "No forecast for this hour (the model needs 24 hours of readings before it)."
+      : "No forecast for this hour (forecasts exist for July to December 2024 only).";
     return;
+  }
+  if (LIVE && s.online === false) {
+    const tr = body.insertRow();
+    const td = tr.insertCell();
+    td.colSpan = 4;
+    td.textContent = "This buoy has not reported recently, so these forecasts are old.";
   }
   for (const f of fc.forecasts) {
     const tr = body.insertRow();
@@ -263,7 +295,9 @@ function renderChart(view) {
   });
   $("note").textContent = view.hasForecast && rows.some((r) => r.mlp != null)
     ? `Each forecast is plotted at the time it is for, and was made ${$("horizon").value} hours earlier.`
-    : "No forecasts in this window: they exist for July to December 2024 only (the test period), and not at all for buoys with no data then.";
+    : LIVE
+      ? "No earlier forecasts to compare: a forecast needs 24 hours of readings first, and this buoy's file only holds the last 24 hours."
+      : "No forecasts in this window: they exist for July to December 2024 only (the test period), and not at all for buoys with no data then.";
 }
 
 // ---------- quality flags ----------
@@ -295,6 +329,9 @@ function renderStrips(strips) {
 async function loadEvents(s) {
   const d = await stationData(s.id);
   $("events-box").hidden = false;
+  $("events-title").textContent = LIVE
+    ? "Flagged stretches at this station (recent readings)"
+    : "Flagged stretches at this station (2022 to 2024)";
   const ul = $("events");
   ul.replaceChildren();
   $("events-note").textContent = d.n_events
@@ -334,6 +371,23 @@ async function loadReport() {
   }
   renderVerification();
   renderQcSummary();
+}
+
+function renderLiveReport() {
+  const h = state.meta.hindcast;
+  if (!LIVE || !h || !Object.keys(h).length) return;
+  $("live-report").hidden = false;
+  const body = $("hindcast").createTBody();
+  for (const lead of ["3", "6"]) {
+    if (!h[lead]) continue;
+    const rows = [["All buoys below", h[lead]], ...Object.entries(h[lead].stations).map(([id, g]) => [id, g])];
+    for (const [name, g] of rows) {
+      const r = body.insertRow();
+      if (name.startsWith("All")) r.className = "group-row";
+      [`${lead} h`, name, g.n.toLocaleString("en-US"), g.persistence.toFixed(3), g.linear.toFixed(3), g.mlp.toFixed(3)]
+        .forEach((t) => (r.insertCell().textContent = t));
+    }
+  }
 }
 
 function skillBar(lo, hi, skill) {

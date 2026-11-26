@@ -11,7 +11,7 @@
 <body>
 <header>
   <h1>buoycast</h1>
-  <p>Wave height forecasts for six NOAA buoys, with quality checks on the readings and a score card for the forecasts.</p>
+  <p>Short-term wave height forecasts for ocean buoys, with quality checks on the readings and a score card for the forecasts.</p>
   <p id="banner" class="banner" hidden></p>
 </header>
 <main>
@@ -50,13 +50,20 @@
         <li><span class="cell missing"></span>no reading</li>
       </ul>
       <div id="events-box" hidden>
-        <h3>Flagged stretches at this station (2022 to 2024)</h3>
+        <h3 id="events-title">Flagged stretches at this station</h3>
         <p class="muted" id="events-note"></p>
         <ul id="events"></ul>
       </div>
     </div>
   </section>
 </main>
+<section id="live-report" hidden>
+  <h2>Recent track record (live data)</h2>
+  <p class="muted">The saved model re-run over the last 30 days of each buoy's live file, using only readings up to each forecast time.
+    These days are after the model's training period. Numbers are the average miss in metres (lower is better).
+    Buoys whose live file only holds 24 hours (the Canadian ones) cannot be scored this way.</p>
+  <table id="hindcast" class="vtable"><thead><tr><th>Ahead</th><th>Buoy</th><th>Forecasts</th><th>Persistence</th><th>Linear</th><th>MLP</th></tr></thead></table>
+</section>
 <section id="report">
   <h2>How reliable is it?</h2>
   <p class="muted">Scores for the test period, July to December 2024: forecasts the model never saw during training.
@@ -73,7 +80,7 @@
   <div id="qctable"></div>
 </section>
 <footer>
-  <p class="muted">Data: NOAA National Data Buoy Center standard meteorological files, and surface drifters from NOAA's Global Drifter Program. Map tiles: OpenStreetMap contributors.</p>
+  <p class="muted">Data: NOAA National Data Buoy Center (NDBC) standard meteorological files, including the live realtime files and the Canadian buoys (Environment and Climate Change Canada) that NDBC serves, and surface drifters from NOAA's Global Drifter Program. Map tiles: OpenStreetMap contributors.</p>
 </footer>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="app.js"></script>

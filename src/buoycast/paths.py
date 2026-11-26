@@ -12,6 +12,8 @@ DRIFTERS_QC_PARQUET = ROOT / "data" / "sample" / "drifters_qc.parquet"
 QC_FLAGS_PARQUET = ROOT / "data" / "sample" / "qc_flags.parquet"
 RAW_DIR = ROOT / "data" / "raw"
 ARTIFACTS = ROOT / "artifacts"
+# Trained model files (about 32 KB each). Inside the package so an installed copy has them.
+WEIGHTS = Path(__file__).resolve().parent / "weights"
 METRICS_JSON = ARTIFACTS / "metrics.json"
 QC_SUMMARY_JSON = ARTIFACTS / "qc_summary.json"
 VERIFICATION_JSON = ARTIFACTS / "verification.json"

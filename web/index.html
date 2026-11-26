@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>buoycast</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>buoycast</h1>
+  <p>Wave height forecasts for six NOAA buoys. The data is a historical sample, so "now" means the last hour in it.</p>
+</header>
+<main>
+  <div id="map" aria-label="Map of buoy stations"></div>
+  <section id="panel">
+    <p id="hint">Click a station on the map.</p>
+    <div id="detail" hidden>
+      <h2 id="name"></h2>
+      <p id="meta" class="muted"></p>
+      <div class="controls">
+        <label>Forecast ahead
+          <select id="horizon"><option value="3">3 hours</option><option value="6">6 hours</option></select>
+        </label>
+        <label>Window ends
+          <input id="end" type="datetime-local">
+        </label>
+      </div>
+      <h3>Forecast issued at the end of the window</h3>
+      <table id="fc"><thead><tr><th>Valid at (UTC)</th><th>MLP</th><th>Linear</th><th>Persistence</th></tr></thead><tbody></tbody></table>
+      <h3>Last 72 hours: observed vs forecast</h3>
+      <svg id="chart" viewBox="0 0 640 300" role="img" aria-label="Observed and forecast wave height"></svg>
+      <ul id="legend">
+        <li><span class="sw obs"></span>Observed</li>
+        <li><span class="sw mlp"></span>MLP forecast</li>
+        <li><span class="sw per"></span>Persistence</li>
+      </ul>
+      <p class="muted" id="note"></p>
+    </div>
+  </section>
+</main>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

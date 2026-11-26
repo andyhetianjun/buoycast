@@ -239,7 +239,6 @@ def create_app(data: Path = SAMPLE_PARQUET, artifacts: Path = ARTIFACTS) -> Fast
         flags = qc_flags()
         flags = flags[flags["station"] == station].set_index("time")
         window = flags.loc[end_ts - pd.Timedelta(hours=hours - 1) : end_ts].drop(columns="station")
-        window = window[[c for c in window.columns if not c.endswith("_overall")]]
         rows = [
             {"time": _iso(t), **{c: int(v) for c, v in r.items()}} for t, r in window.iterrows()
         ]

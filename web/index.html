@@ -6,16 +6,18 @@
 <title>buoycast</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <link rel="stylesheet" href="style.css">
+<script src="config.js"></script>
 </head>
 <body>
 <header>
   <h1>buoycast</h1>
-  <p>Wave height forecasts for six NOAA buoys. The data is a historical sample, so "now" means the last hour in it.</p>
+  <p>Wave height forecasts for six NOAA buoys, with quality checks on the readings and a score card for the forecasts.</p>
+  <p id="banner" class="banner" hidden></p>
 </header>
 <main>
   <div id="map" aria-label="Map of buoy stations"></div>
   <section id="panel">
-    <p id="hint">Click a station on the map.</p>
+    <p id="hint">Click a station on the map. Click anywhere else to find the nearest station.</p>
     <div id="detail" hidden>
       <h2 id="name"></h2>
       <p id="meta" class="muted"></p>
@@ -23,7 +25,7 @@
         <label>Forecast ahead
           <select id="horizon"><option value="3">3 hours</option><option value="6">6 hours</option></select>
         </label>
-        <label>Window ends
+        <label>Window ends (UTC)
           <input id="end" type="datetime-local">
         </label>
       </div>
@@ -35,11 +37,44 @@
         <li><span class="sw obs"></span>Observed</li>
         <li><span class="sw mlp"></span>MLP forecast</li>
         <li><span class="sw per"></span>Persistence</li>
+        <li><span class="dot suspect"></span>Suspect reading</li>
+        <li><span class="dot fail"></span>Failed reading</li>
       </ul>
       <p class="muted" id="note"></p>
+      <h3>Quality flags in the same window</h3>
+      <svg id="qcstrip" viewBox="0 0 640 100" role="img" aria-label="Quality flags for four variables"></svg>
+      <ul id="qclegend" class="legend2">
+        <li><span class="cell pass"></span>pass</li>
+        <li><span class="cell suspect"></span>suspect</li>
+        <li><span class="cell fail"></span>fail</li>
+        <li><span class="cell missing"></span>no reading</li>
+      </ul>
+      <div id="events-box" hidden>
+        <h3>Flagged stretches at this station (2022 to 2024)</h3>
+        <p class="muted" id="events-note"></p>
+        <ul id="events"></ul>
+      </div>
     </div>
   </section>
 </main>
+<section id="report">
+  <h2>How reliable is it?</h2>
+  <p class="muted">Scores for the test period, July to December 2024: forecasts the model never saw during training.
+    Skill is how much smaller the average error is than the "waves stay as they are" guess (persistence).
+    The range is a 95% range from resampling days.</p>
+  <div class="controls">
+    <label>Forecast ahead
+      <select id="vlead"><option value="3">3 hours</option><option value="6">6 hours</option></select>
+    </label>
+  </div>
+  <div id="verification"></div>
+  <h2>Quality checks</h2>
+  <p class="muted" id="qcnote"></p>
+  <div id="qctable"></div>
+</section>
+<footer>
+  <p class="muted">Data: NOAA National Data Buoy Center standard meteorological files, and surface drifters from NOAA's Global Drifter Program. Map tiles: OpenStreetMap contributors.</p>
+</footer>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="app.js"></script>
 </body>

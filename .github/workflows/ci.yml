@@ -16,6 +16,7 @@ jobs:
       - run: uv run pytest -q
       # Tiny training run on the committed sample (1 seed, 2 epochs).
       - run: uv run buoycast-train --quick
+      - run: uv run buoycast-site --out "$RUNNER_TEMP/site"
 
   docker:
     runs-on: ubuntu-latest

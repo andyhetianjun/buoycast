@@ -2,6 +2,8 @@
 
 I built a small wave-height forecaster from real ocean buoy measurements because, after working with ocean simulation data during my summer 2026 co-op at Fisheries and Oceans Canada, I wanted to try the other side: real measurements from the water, and whether a small neural network can forecast waves better than simple guesses.
 
+**Try it: <https://andyhetianjun.github.io/buoycast/>** (a static demo precomputed from the sample data in this repo; no server)
+
 [![CI](https://github.com/andyhetianjun/buoycast/actions/workflows/ci.yml/badge.svg)](https://github.com/andyhetianjun/buoycast/actions/workflows/ci.yml)
 
 ## What it does
@@ -15,7 +17,19 @@ A small neural network (an MLP, which is a few layers of simple number-crunching
 
 Short version of the result: the neural network beat both guesses on months it never saw, by a modest margin (about 18% lower error than persistence at 3 hours). Caveats are below.
 
-## Try it
+## Features
+
+Added after the first version, each with its own page:
+
+- [Data quality checks](docs/data-quality-checks.md): every reading gets a pass, suspect or fail flag from five simple tests (value range, spike, rate of change, stuck sensor, gap), including for a drifting buoy whose position changes.
+- [Forecast verification](docs/forecast-verification.md): errors, bias and skill against persistence by lead time, wave height and station, with 95% ranges.
+- [More observation data](docs/more-observation-data.md): a loader for the open NNJA-AI archive, and an honest test of whether nearby airport weather helps (it did not, measurably).
+- [Maps and spatial queries](docs/geospatial-export.md): GeoParquet and GeoJSON export, plus bounding box, polygon and nearest-station queries.
+- [The demo site](docs/demo.md): the map page as a static site on GitHub Pages.
+
+![The map page](docs/img/demo.png)
+
+## Run it locally
 
 You need [uv](https://docs.astral.sh/uv/). The data sample is committed, so nothing is downloaded.
 

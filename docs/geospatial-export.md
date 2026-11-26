@@ -10,7 +10,7 @@ and ask simple "where" questions.
 Export everything as GeoParquet and GeoJSON:
 
 ```
-uv run buoycast-export            # writes exports/ (not committed, about 5 MB)
+uv run buoycast-export            # writes exports/ (not committed, about 3 MB)
 ```
 
 | File | What | Rows |
@@ -37,6 +37,7 @@ Reading it back:
 
 ```python
 import geopandas as gpd
+
 fc = gpd.read_parquet("exports/forecasts.parquet")
 fc[fc.lead_hours == 3].plot(column="mlp")
 ```
@@ -61,9 +62,10 @@ the drifter, where every row is somewhere different:
 
 ```python
 from buoycast import geo, drifters
+
 fixes = drifters.load_drifters()["300534064906390"].reset_index()
-geo.within_bbox(fixes, -135, 45, -130, 50)      # the fixes inside that box
-geo.nearest(fixes, 46.0, -130.0, k=1)            # the fix closest to a point
+geo.within_bbox(fixes, -135, 45, -130, 50)  # the fixes inside that box
+geo.nearest(fixes, 46.0, -130.0, k=1)  # the fix closest to a point
 ```
 
 Details I thought about:

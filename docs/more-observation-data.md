@@ -14,9 +14,10 @@ stored as one Parquet file per day in an open Google Cloud bucket
 needs no account. I read it with the Parquet reader in pyarrow, one day at a time,
 fetching only the five columns I use.
 
-I looked through the surface datasets for wave heights. There are none: the land,
-airport and mobile-land surface sets in the archive carry wind, pressure and
-temperature but no sea state. So this archive cannot give me more *targets* to
+I looked for wave heights in the surface datasets (`conv/adpsfc`, four of them:
+land weather stations, mobile land stations and two airport sets). They carry wind,
+pressure and temperature but no sea state, and I did not look at the other groups
+(balloons, satellites). So this archive cannot give me more *targets* to
 learn from. What it can give me is more *inputs*: the wind and pressure at an
 airport on the coast near each buoy.
 
@@ -41,7 +42,7 @@ airport on the coast near each buoy.
   pressure, and pressure change over 3 hours. `tests/test_nnja.py` checks that
   they never look ahead in time.
 
-To download it again (about 2 minutes on my connection, 1,096 small requests):
+To download it again (a few minutes on my connection, 1,096 small requests):
 
 ```
 uv run buoycast-nnja

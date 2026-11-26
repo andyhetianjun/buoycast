@@ -130,6 +130,10 @@ flowchart LR
     C --> G[api.py FastAPI]
     F --> G
     G --> H[web/ Leaflet map + chart]
+    L[NDBC realtime files<br/>every hour] --> B
+    L --> M[live.py<br/>forecast latest hour]
+    F --> M
+    M --> N[static site on Pages<br/>+ buoycast command]
 ```
 
 The raw files mark missing readings with codes like 99 or 999, which the parser turns into blanks so a missing reading never becomes a 99 m wave. Everything is averaged to hourly. For each hour the model sees the recent past (wave height over the last 24 hours, wind, pressure and its trend, time of day, which buoy) and predicts the wave height 3 or 6 hours later. The data is split by time (train on 2022 to 2023, stop-early check on 2024 H1, test on 2024 H2), and a test checks that no future reading leaks into earlier features. The data caveats, feature list and model settings are in [docs/design.md](docs/design.md).

@@ -20,9 +20,9 @@ from .paths import STATIONS
 STATION_IDS = sorted(STATIONS)
 
 
-def design_matrix(df: pd.DataFrame) -> np.ndarray:
-    """Feature columns plus a one-hot station id, as float32."""
-    x = df[feature_names()].to_numpy(dtype=np.float32)
+def design_matrix(df: pd.DataFrame, extra: tuple[str, ...] = ()) -> np.ndarray:
+    """Feature columns (plus any `extra` ones) and a one-hot station id, as float32."""
+    x = df[[*feature_names(), *extra]].to_numpy(dtype=np.float32)
     onehot = np.stack([(df["station"] == s).to_numpy() for s in STATION_IDS], axis=1)
     return np.concatenate([x, onehot.astype(np.float32)], axis=1)
 
@@ -49,12 +49,13 @@ def persistence(df: pd.DataFrame) -> np.ndarray:
 class LinearModel:
     """Ordinary least squares (tiny ridge for stability) on the change in wave height."""
 
-    def __init__(self) -> None:
+    def __init__(self, extra: tuple[str, ...] = ()) -> None:
+        self.extra = extra
         self.scaler: Scaler | None = None
         self.weights: np.ndarray | None = None
 
     def fit(self, df: pd.DataFrame) -> LinearModel:
-        x = design_matrix(df)
+        x = design_matrix(df, self.extra)
         self.scaler = Scaler.fit(x)
         z = np.c_[self.scaler.apply(x), np.ones(len(x), dtype=np.float32)]
         y = (df["target"] - df["wvht_lag0"]).to_numpy()
@@ -65,7 +66,9 @@ class LinearModel:
 
     def predict(self, df: pd.DataFrame) -> np.ndarray:
         assert self.scaler is not None and self.weights is not None
-        z = np.c_[self.scaler.apply(design_matrix(df)), np.ones(len(df), dtype=np.float32)]
+        z = np.c_[
+            self.scaler.apply(design_matrix(df, self.extra)), np.ones(len(df), dtype=np.float32)
+        ]
         return np.maximum(df["wvht_lag0"].to_numpy() + z @ self.weights, 0.0)
 
 
@@ -91,11 +94,12 @@ class MLPForecaster:
     model: MLP
     scaler: Scaler
     delta_scale: float
+    extra: tuple[str, ...] = ()
 
     def predict(self, df: pd.DataFrame) -> np.ndarray:
         self.model.eval()
         with torch.no_grad():
-            x = torch.from_numpy(self.scaler.apply(design_matrix(df)))
+            x = torch.from_numpy(self.scaler.apply(design_matrix(df, self.extra)))
             delta = self.model(x).numpy() * self.delta_scale
         return np.maximum(df["wvht_lag0"].to_numpy() + delta, 0.0)
 
@@ -112,11 +116,12 @@ def train_mlp(
     patience: int = 6,
     batch_size: int = 512,
     lr: float = 2e-3,
+    extra: tuple[str, ...] = (),
 ) -> MLPForecaster:
     """Train on the train split; keep the epoch with the best validation MAE."""
     torch.manual_seed(seed)
     gen = torch.Generator().manual_seed(seed)
-    x_raw = design_matrix(train)
+    x_raw = design_matrix(train, extra)
     scaler = Scaler.fit(x_raw)
     delta = (train["target"] - train["wvht_lag0"]).to_numpy(dtype=np.float32)
     delta_scale = float(delta.std()) or 1.0
@@ -124,7 +129,7 @@ def train_mlp(
     y = torch.from_numpy(delta / delta_scale)
 
     model = MLP(x.shape[1])
-    fc = MLPForecaster(model, scaler, delta_scale)
+    fc = MLPForecaster(model, scaler, delta_scale, extra)
     opt = torch.optim.AdamW(model.parameters(), lr=lr, weight_decay=1e-4)
     loss_fn = nn.HuberLoss(delta=1.0)
     best_mae, best_state, stale = float("inf"), None, 0

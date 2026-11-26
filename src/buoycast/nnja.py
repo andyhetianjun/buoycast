@@ -21,6 +21,7 @@ import pandas as pd
 import pyarrow.fs as pafs
 import pyarrow.parquet as pq
 
+from .features import build_features
 from .paths import NNJA_PARQUET, RAW_DIR, YEARS
 
 BUCKET_PATH = "nnja-ai/data/v1/conv/adpsfc/NC000007/OBS_DATE={d}/gdas.{n}.NC000007.parquet"
@@ -108,12 +109,48 @@ def load_extra(path=NNJA_PARQUET) -> dict[str, pd.DataFrame]:
     return out
 
 
+EXTRA_NAMES = ("air_wspd", "air_wind_u", "air_wind_v", "air_pres", "air_pres_d3")
+
+
+def extra_features(airport: pd.DataFrame) -> pd.DataFrame:
+    """Model inputs from one airport on its hourly grid; each row uses only that hour or earlier."""
+    a = airport.ffill(limit=2)  # looks backwards only
+    rad = np.deg2rad(a["wdir"])
+    return pd.DataFrame(
+        {
+            "air_wspd": a["wspd"],
+            "air_wind_u": -a["wspd"] * np.sin(rad),
+            "air_wind_v": -a["wspd"] * np.cos(rad),
+            "air_pres": a["pres"],
+            "air_pres_d3": a["pres"] - a["pres"].shift(3),
+        }
+    )
+
+
+def build_with_extra(
+    hourly: dict[str, pd.DataFrame],
+    extra: dict[str, pd.DataFrame],
+    horizon: int,
+    stations: list[str] | None = None,
+) -> pd.DataFrame:
+    """Like features.build_all, plus the airport inputs. Rows missing any of them are dropped."""
+    frames = []
+    for station in stations or sorted(extra):
+        f = build_features(hourly[station], horizon)
+        f = f.join(extra_features(extra[station]).reindex(f.index))
+        f.insert(0, "station", station)
+        frames.append(f.dropna(subset=list(EXTRA_NAMES)))
+    return pd.concat(frames)
+
+
 def main() -> None:
     df = download()
     NNJA_PARQUET.parent.mkdir(parents=True, exist_ok=True)
-    df.astype({c: "float32" for c in ("wspd", "wdir", "pres")}).round(2).assign(
-        airport=lambda x: x["airport"].astype("category")
-    ).to_parquet(NNJA_PARQUET, index=False, compression="zstd")
+    df = df.astype({c: "float32" for c in ("wspd", "wdir", "pres")})
+    df[["wspd", "wdir", "pres"]] = df[["wspd", "wdir", "pres"]].round(2)
+    df.assign(airport=df["airport"].astype("category")).to_parquet(
+        NNJA_PARQUET, index=False, compression="zstd"
+    )
     counts = df.groupby("airport", observed=True).size().to_dict()
     print(f"wrote {NNJA_PARQUET} ({len(df)} rows) {counts}")
     print(f"missing pressure: {float(np.mean(df['pres'].isna())):.1%}")

@@ -1,6 +1,32 @@
-# The static demo
+# The static demo (live version)
 
-<https://andyhetianjun.github.io/buoycast/> is the same map page as
+The page at <https://andyhetianjun.github.io/buoycast/> is rebuilt every hour by
+`.github/workflows/pages.yml` with `uv run buoycast-site --live`. That command:
+
+1. downloads `https://www.ndbc.noaa.gov/data/realtime2/<station>.txt` for the six
+   training buoys and eight Canadian buoys (`src/buoycast/live.py`);
+2. parses and averages it to hourly with the same code as training, then runs the five
+   quality checks;
+3. runs the committed models (`src/buoycast/weights/`, 32 KB each) to get 3 h and 6 h
+   forecasts for every hour that has enough history, including the newest hour;
+4. writes the same static JSON files as below, plus a 30-day "recent track record".
+
+Nothing fetched is committed. If no station can be downloaded, the build uses the
+committed sample instead and the banner says so. `last updated` and the source are
+shown at the top of the page. Test it without waiting for the schedule:
+`uv run buoycast-site --live && cd site && python3 -m http.server 8765`.
+
+Things to know: GitHub can delay scheduled runs by many minutes, and pauses them in
+repositories with no activity for 60 days. Canadian buoys only have 24 hours of
+history in NDBC's file, so each gets one forecast and no track record. Their
+station id was never seen in training, so the model gets an all-zero station input.
+`tests/test_live.py` covers the parsing, the newest-hour forecast, the offline
+marker, the fallback and the command, with fake files (no network in tests).
+
+The rest of this page describes the sample-data version, which is what `uv run buoycast-site`
+(without `--live`) still builds.
+
+In either mode the map page is the same as
 `buoycast-serve`, but it needs no server. Everything it shows was computed once, when
 the site was built, from the sample data committed in this repository. The page says so
 at the top. The data runs from 2022 to 2024, so it is not live, and forecasts exist

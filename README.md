@@ -2,9 +2,30 @@
 
 I built a small wave-height forecaster from real ocean buoy measurements because, after working with ocean simulation data during my summer 2026 co-op at Fisheries and Oceans Canada, I wanted to try the other side: real measurements from the water, and whether a small neural network can forecast waves better than simple guesses.
 
-**Try it: <https://andyhetianjun.github.io/buoycast/>** (a static demo precomputed from the sample data in this repo; no server)
+**Try it: <https://andyhetianjun.github.io/buoycast/>** (rebuilt every hour from NOAA's live buoy files; if NOAA cannot be reached it shows the committed 2022 to 2024 sample and says so)
 
 [![CI](https://github.com/andyhetianjun/buoycast/actions/workflows/ci.yml/badge.svg)](https://github.com/andyhetianjun/buoycast/actions/workflows/ci.yml)
+
+![A short clip of the map page](docs/img/demo.gif)
+
+## Install in one line
+
+You need [uv](https://docs.astral.sh/uv/). This downloads the code and the small trained models (about 64 KB), fetches the buoy's latest readings and prints a forecast:
+
+```
+uvx --from git+https://github.com/andyhetianjun/buoycast buoycast forecast 46041
+```
+
+```
+Buoy 46041 (Cape Elizabeth, 45 NM NW of Aberdeen WA)
+Latest wave reading: 2026-11-26 01:00 UTC (1.6 h ago)
+Now: waves 4.9 m (pass), wind 14.7 m/s (pass), pressure 1010.8 hPa (pass)
+Forecast wave height:
+  2026-11-26 04:00 UTC (+3 h)   MLP 5.00 m   linear 5.01 m   persistence 4.90 m
+  2026-11-26 07:00 UTC (+6 h)   MLP 4.86 m   linear 4.99 m   persistence 4.90 m
+```
+
+`buoycast stations` lists the buoys the demo covers. Any other NDBC station id works too, but the model only saw six buoys in training, so for the others the forecast is less reliable (the command says so). The first run takes a few seconds while PyTorch downloads. I tested this from an empty folder against a local copy of the repo, not yet from GitHub itself.
 
 ## What it does
 
@@ -25,7 +46,7 @@ Added after the first version, each with its own page:
 - [Forecast verification](docs/forecast-verification.md): errors, bias and skill against persistence by lead time, wave height and station, with 95% ranges.
 - [More observation data](docs/more-observation-data.md): a loader for the open NNJA-AI archive, and an honest test of whether nearby airport weather helps (it did not, measurably).
 - [Maps and spatial queries](docs/geospatial-export.md): GeoParquet and GeoJSON export, plus bounding box, polygon and nearest-station queries.
-- [The demo site](docs/demo.md): the map page as a static site on GitHub Pages.
+- [The demo site](docs/demo.md): the map page as a static site on GitHub Pages, rebuilt hourly from live data, with Canadian buoys.
 
 ![The map page](docs/img/demo.png)
 
@@ -38,7 +59,7 @@ uv sync
 uv run buoycast-serve           # then open http://127.0.0.1:8000
 ```
 
-The map page loads map tiles from the internet; the forecasting itself works offline. Because the data is a fixed historical sample, "now" is the last hour in it. The "Window ends" box lets you move back in time (the test period starts on 2024-07-01).
+The map page loads map tiles from the internet; the forecasting itself works offline. (The live page and the `buoycast` command need internet; this server uses the sample.) Because the data is a fixed historical sample, "now" is the last hour in it. The "Window ends" box lets you move back in time (the test period starts on 2024-07-01).
 
 API endpoints the page uses:
 
@@ -46,6 +67,15 @@ API endpoints the page uses:
 - `GET /observations?station=46041&hours=48&end=...`: hourly wave height, wind speed and pressure.
 - `GET /forecast/{station}?as_of=...`: 3 h and 6 h forecasts from the three methods, using only data up to `as_of`.
 - `GET /backtest/{station}?horizon=3&hours=72&end=...`: forecasts made earlier next to what was observed.
+
+## Live data
+
+Every hour a GitHub Actions job downloads each buoy's latest file from NDBC (`https://www.ndbc.noaa.gov/data/realtime2/<station>.txt`), cleans it the same way as the training data, runs the quality checks, and runs the committed models to write fresh 3 h and 6 h forecasts. It then redeploys the page. Nothing downloaded is committed. The page shows when it was built and which source it used. Details are in [docs/demo.md](docs/demo.md).
+
+- Buoys: the six from training plus eight Canadian buoys that NDBC serves (BC coast and Nova Scotia). A buoy with no recent reading is greyed out and its forecasts are marked old.
+- The page opens on a buoy that has a current forecast.
+- NDBC keeps 45 days for its own buoys but only the last 24 hours for the Canadian ones. A forecast needs 24 hours of history, so a Canadian buoy gets exactly one forecast (for the latest hour), no track record, and a note that the model never trained on it.
+- "Recent track record" on the page re-runs the model over the last 30 days of each buoy's file. On the page I built at 2026-11-26 02:39 UTC, over the four buoys with 45 days of data, the 3 h average miss was 0.261 m for persistence, 0.236 m linear and 0.221 m for the MLP (2,588 forecasts). That is one month in one season, not a claim about the model in general. Reproduce with `uv run buoycast-site --live` and open `site/index.html` through a local server.
 
 ## Results
 
@@ -122,7 +152,7 @@ To refresh the sample from NOAA: `uv run buoycast-download`. Re-downloading may 
 - Try a GRU or 1D-CNN, and gradient boosted trees.
 - Add weather forecast winds as inputs.
 - Evaluate across several seasons instead of one split.
-- Use NDBC's live files so the map shows the current ocean.
+- Get longer history for the Canadian buoys (NDBC only serves their last 24 hours), so they can be scored and the model can be retrained on them.
 
 ## License
 

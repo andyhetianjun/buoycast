@@ -94,6 +94,18 @@ async function loadView(s, endIso, horizon) {
     });
     for (const v of Object.keys(strips)) strips[v].push({ time, flag: Number(d.qc[v][i]) });
   }
+  if (LIVE && e === d.hours - 1) {
+    // The newest forecast reaches past the last reading: show that stretch too.
+    for (let i = e + 1; i <= e + horizon; i++) {
+      rows.push({
+        valid_time: new Date(t0 + i * HOUR).toISOString(),
+        observed: null,
+        mlp: fAt(horizon, "mlp", i),
+        linear: fAt(horizon, "linear", i),
+        persistence: fAt(horizon, "persistence", i),
+      });
+    }
+  }
   const forecasts = [];
   for (const lead of [3, 6]) {
     const j = e + lead;
@@ -294,7 +306,8 @@ function renderChart(view) {
     }
   });
   $("note").textContent = view.hasForecast && rows.some((r) => r.mlp != null)
-    ? `Each forecast is plotted at the time it is for, and was made ${$("horizon").value} hours earlier.`
+    ? `Each forecast is plotted at the time it is for, and was made ${$("horizon").value} hours earlier.` +
+      (LIVE && rows.some((r) => r.observed == null && r.mlp != null) ? " The last hours (no observation yet) are the newest forecast." : "")
     : LIVE
       ? "No earlier forecasts to compare: a forecast needs 24 hours of readings first, and this buoy's file only holds the last 24 hours."
       : "No forecasts in this window: they exist for July to December 2024 only (the test period), and not at all for buoys with no data then.";
@@ -335,7 +348,7 @@ async function loadEvents(s) {
   const ul = $("events");
   ul.replaceChildren();
   $("events-note").textContent = d.n_events
-    ? `${d.n_events} stretches flagged by at least one test; showing the ${d.events.length} worst. Click one to move the window there.`
+    ? `${d.n_events} ${d.n_events === 1 ? "stretch" : "stretches"} flagged by at least one test; showing the ${d.events.length === 1 ? "one" : "worst " + d.events.length}. Click one to move the window there.`
     : "No readings flagged at this station.";
   const t0 = Date.parse(d.start);
   for (const ev of d.events) {

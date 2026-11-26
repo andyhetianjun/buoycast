@@ -20,6 +20,7 @@ def test_site_is_self_contained_and_matches_the_forecasts(tmp_path):
     assert len(meta["stations"]) == 6 and len(meta["drifters"]) == 5
     assert meta["verification"]["leads"]["3"]["overall"]["n"] > 10000
     assert all(d["flagged"] == 0 for d in meta["drifters"])
+    assert meta["operational"]["leads"]["6"]["overall"]["methods"]["gfswave"]["mae"] > 0
 
     d = json.loads((tmp_path / "data" / "46041.json").read_text())
     assert len(d["wvht"]) == d["hours"] and all(len(v) == d["hours"] for v in d["qc"].values())

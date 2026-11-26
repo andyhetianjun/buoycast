@@ -79,8 +79,16 @@
   <p class="muted" id="qcnote"></p>
   <div id="qctable"></div>
 </section>
+<section id="operational" hidden>
+  <h2>Against NOAA's wave model</h2>
+  <p class="muted">The same buoys and the same forecast times, scored against what the buoy measured. GFS-Wave is NOAA's
+    operational wave model (WAVEWATCH III driven by the GFS weather forecast). It covers four weeks of October 2024 and three
+    buoys, so treat it as a small check, not a ranking. Average miss in metres (lower is better).</p>
+  <table id="optable" class="vtable"></table>
+  <p class="muted" id="opnote"></p>
+</section>
 <footer>
-  <p class="muted">Data: NOAA National Data Buoy Center (NDBC) standard meteorological files, including the live realtime files and the Canadian buoys (Environment and Climate Change Canada) that NDBC serves, and surface drifters from NOAA's Global Drifter Program. Map tiles: OpenStreetMap contributors.</p>
+  <p class="muted">Data: NOAA National Data Buoy Center (NDBC) standard meteorological files, including the live realtime files and the Canadian buoys (Environment and Climate Change Canada) that NDBC serves, and surface drifters from NOAA's Global Drifter Program, and GFS-Wave point forecasts from NOAA's open data on AWS. Map tiles: OpenStreetMap contributors.</p>
 </footer>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="app.js"></script>

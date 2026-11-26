@@ -375,7 +375,9 @@ async function loadReport() {
     if (STATIC) {
       state.verification = state.meta.verification;
       state.qc = state.meta.qc;
+      state.operational = state.meta.operational;
     } else {
+      state.operational = await getJSON("/operational").catch(() => null);
       [state.verification, state.qc] = await Promise.all([getJSON("/verification"), getJSON("/qc/summary")]);
     }
   } catch (e) {
@@ -384,6 +386,32 @@ async function loadReport() {
   }
   renderVerification();
   renderQcSummary();
+  renderOperational();
+}
+
+function renderOperational() {
+  const op = state.operational;
+  if (!op) return;
+  $("operational").hidden = false;
+  const table = $("optable");
+  table.replaceChildren();
+  const head = table.createTHead().insertRow();
+  ["Ahead", "Group", "Forecasts", "Persistence", "buoycast", "GFS-Wave", "Winner"]
+    .forEach((t) => head.appendChild(html("th", {}, t)));
+  const body = table.createTBody();
+  for (const [lead, d] of Object.entries(op.leads)) {
+    const rows = [["All three buoys", d.overall], ...d.by_station.map((g) => [g.station, g])];
+    for (const [name, g] of rows) {
+      const m = g.methods;
+      const [lo, hi] = g.mlp_skill_vs_gfswave_95;
+      const winner = lo > 0 ? "buoycast" : hi < 0 ? "GFS-Wave" : "no clear difference";
+      const r = body.insertRow();
+      if (name.startsWith("All")) r.className = "group-row";
+      [`${lead} h`, name, g.n.toLocaleString("en-US"), m.persistence.mae.toFixed(3), m.mlp.mae.toFixed(3), m.gfswave.mae.toFixed(3), winner]
+        .forEach((t) => (r.insertCell().textContent = t));
+    }
+  }
+  $("opnote").textContent = "The winner column uses the 95% range from resampling days. buoycast reads the buoy's last 24 hours; GFS-Wave does not see the buoy at all.";
 }
 
 function renderLiveReport() {

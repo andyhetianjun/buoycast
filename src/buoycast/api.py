@@ -18,6 +18,7 @@ from . import geo
 from .features import build_features, load_hourly
 from .models import LinearModel, MLPForecaster, load_bundle
 from .paths import (
+    OPERATIONAL_JSON,
     QC_FLAGS_PARQUET,
     QC_SUMMARY_JSON,
     SAMPLE_PARQUET,
@@ -220,6 +221,13 @@ def create_app(data: Path = SAMPLE_PARQUET, weights: Path = WEIGHTS) -> FastAPI:
         if not VERIFICATION_JSON.exists():
             raise HTTPException(503, "no verification report found; run buoycast-verify")
         return json.loads(VERIFICATION_JSON.read_text())
+
+    @app.get("/operational")
+    def operational() -> dict:
+        """buoycast against NOAA's GFS-Wave at the same buoys (buoycast-operational)."""
+        if not OPERATIONAL_JSON.exists():
+            raise HTTPException(503, "no comparison found; run buoycast-operational")
+        return json.loads(OPERATIONAL_JSON.read_text())
 
     @app.get("/qc/summary")
     def qc_summary() -> dict:

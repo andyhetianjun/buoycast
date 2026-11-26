@@ -46,6 +46,7 @@ Added after the first version, each with its own page:
 - [Forecast verification](docs/forecast-verification.md): errors, bias and skill against persistence by lead time, wave height and station, with 95% ranges.
 - [More observation data](docs/more-observation-data.md): a loader for the open NNJA-AI archive, and an honest test of whether nearby airport weather helps (it did not, measurably).
 - [Maps and spatial queries](docs/geospatial-export.md): GeoParquet and GeoJSON export, plus bounding box, polygon and nearest-station queries.
+- [Against NOAA's wave model](docs/vs-operational-model.md): the same buoys and forecast times scored against NOAA's operational GFS-Wave. buoycast was better at 3 hours, NOAA's model at 6.
 - [The demo site](docs/demo.md): the map page as a static site on GitHub Pages, rebuilt hourly from live data, with Canadian buoys.
 
 ![The map page](docs/img/demo.png)

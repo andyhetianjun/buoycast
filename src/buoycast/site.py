@@ -25,6 +25,7 @@ import pandas as pd
 from . import drifters, live, qc, verify
 from .features import TEST_START, load_hourly
 from .paths import (
+    OPERATIONAL_JSON,
     QC_SUMMARY_JSON,
     ROOT,
     STATIONS,
@@ -239,6 +240,9 @@ def build_site(
         "hindcast": hindcast,
         "verification": json.loads(VERIFICATION_JSON.read_text()),
         "qc": json.loads(QC_SUMMARY_JSON.read_text()),
+        "operational": (
+            json.loads(OPERATIONAL_JSON.read_text()) if OPERATIONAL_JSON.exists() else None
+        ),
     }
     (out / "data" / "index.json").write_text(json.dumps(meta, separators=(",", ":")))
     return {p.name: p.stat().st_size for p in sorted((out / "data").glob("*.json"))}

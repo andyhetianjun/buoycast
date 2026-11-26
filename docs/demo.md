@@ -33,5 +33,5 @@ the report render with no errors.
 ## Limits
 
 - The map tiles and the Leaflet library load from the internet.
-- Because the forecasts are precomputed, the page cannot forecast an hour that is
-  not in the sample, which the server version can.
+- Because the forecasts are precomputed, the page cannot compute a forecast on the
+  fly, which the server version does for any hour in the sample.

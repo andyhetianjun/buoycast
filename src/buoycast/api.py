@@ -16,7 +16,15 @@ from fastapi.staticfiles import StaticFiles
 
 from .features import build_features, load_hourly
 from .models import LinearModel, MLPForecaster, load_bundle
-from .paths import ARTIFACTS, QC_FLAGS_PARQUET, QC_SUMMARY_JSON, SAMPLE_PARQUET, STATIONS, WEB_DIR
+from .paths import (
+    ARTIFACTS,
+    QC_FLAGS_PARQUET,
+    QC_SUMMARY_JSON,
+    SAMPLE_PARQUET,
+    STATIONS,
+    VERIFICATION_JSON,
+    WEB_DIR,
+)
 
 HORIZONS = (3, 6)
 FLAG_CODES = {"1": "pass", "2": "not evaluated", "3": "suspect", "4": "fail", "9": "missing"}
@@ -167,6 +175,13 @@ def create_app(data: Path = SAMPLE_PARQUET, artifacts: Path = ARTIFACTS) -> Fast
         df = pd.read_parquet(QC_FLAGS_PARQUET)
         df["station"] = df["station"].astype(str)
         return df
+
+    @app.get("/verification")
+    def verification() -> dict:
+        """Test-period scores by lead time, wave-height bin and station (buoycast-verify)."""
+        if not VERIFICATION_JSON.exists():
+            raise HTTPException(503, "no verification report found; run buoycast-verify")
+        return json.loads(VERIFICATION_JSON.read_text())
 
     @app.get("/qc/summary")
     def qc_summary() -> dict:

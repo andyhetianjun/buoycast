@@ -71,3 +71,10 @@ def test_qc_summary_lists_every_test(client):
     body = client.get("/qc/summary").json()
     tests = {r["test"] for r in body["stations"]["by_test"]}
     assert {"gross_range", "spike", "rate_of_change", "flat_line", "gap"} <= tests
+
+
+def test_verification_report(client):
+    body = client.get("/verification").json()
+    assert set(body["leads"]) == {"3", "6"}
+    overall = body["leads"]["3"]["overall"]
+    assert overall["n"] > 10000 and overall["methods"]["mlp"]["skill_mae"] > 0

@@ -14,6 +14,7 @@ RAW_DIR = ROOT / "data" / "raw"
 ARTIFACTS = ROOT / "artifacts"
 METRICS_JSON = ARTIFACTS / "metrics.json"
 QC_SUMMARY_JSON = ARTIFACTS / "qc_summary.json"
+VERIFICATION_JSON = ARTIFACTS / "verification.json"
 WEB_DIR = ROOT / "web"
 
 # Name and position from the NDBC active stations list.

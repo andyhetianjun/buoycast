@@ -30,6 +30,7 @@ buoycast-verify = "buoycast.verify:main"
 buoycast-extra = "buoycast.extra_run:main"
 buoycast-export = "buoycast.geo:main"
 buoycast-site = "buoycast.site:main"
+buoycast-operational = "buoycast.operational:main"
 
 [build-system]
 requires = ["uv_build>=0.12.19,<0.13.0"]

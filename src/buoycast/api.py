@@ -6,6 +6,7 @@ sample (or any hour passed as `as_of`), not the live ocean.
 
 from __future__ import annotations
 
+import json
 from functools import lru_cache
 from pathlib import Path
 
@@ -15,9 +16,10 @@ from fastapi.staticfiles import StaticFiles
 
 from .features import build_features, load_hourly
 from .models import LinearModel, MLPForecaster, load_bundle
-from .paths import ARTIFACTS, SAMPLE_PARQUET, STATIONS, WEB_DIR
+from .paths import ARTIFACTS, QC_FLAGS_PARQUET, QC_SUMMARY_JSON, SAMPLE_PARQUET, STATIONS, WEB_DIR
 
 HORIZONS = (3, 6)
+FLAG_CODES = {"1": "pass", "2": "not evaluated", "3": "suspect", "4": "fail", "9": "missing"}
 
 
 def _iso(ts: pd.Timestamp) -> str:
@@ -157,6 +159,38 @@ def create_app(data: Path = SAMPLE_PARQUET, artifacts: Path = ARTIFACTS) -> Fast
             for (t, r), m, li in zip(keep.iterrows(), mlp_pred, lin_pred, strict=True)
         ]
         return {"station": station, "horizon_hours": horizon, "unit": "m", "rows": rows}
+
+    @lru_cache(maxsize=1)
+    def qc_flags() -> pd.DataFrame:
+        if not QC_FLAGS_PARQUET.exists():
+            raise HTTPException(503, "no QC flags found; run buoycast-qc")
+        df = pd.read_parquet(QC_FLAGS_PARQUET)
+        df["station"] = df["station"].astype(str)
+        return df
+
+    @app.get("/qc/summary")
+    def qc_summary() -> dict:
+        if not QC_SUMMARY_JSON.exists():
+            raise HTTPException(503, "no QC summary found; run buoycast-qc")
+        return json.loads(QC_SUMMARY_JSON.read_text())
+
+    @app.get("/qc/{station}")
+    def qc_station(
+        station: str,
+        hours: int = Query(72, ge=1, le=24 * 30),
+        end: str | None = None,
+    ) -> dict:
+        """Per-test flags (1 pass, 2 not evaluated, 3 suspect, 4 fail, 9 missing)."""
+        df = station_frame(station)
+        end_ts = parse_time(end) if end else df.index[-1]
+        flags = qc_flags()
+        flags = flags[flags["station"] == station].set_index("time")
+        window = flags.loc[end_ts - pd.Timedelta(hours=hours - 1) : end_ts].drop(columns="station")
+        window = window[[c for c in window.columns if not c.endswith("_overall")]]
+        rows = [
+            {"time": _iso(t), **{c: int(v) for c, v in r.items()}} for t, r in window.iterrows()
+        ]
+        return {"station": station, "flag_codes": FLAG_CODES, "rows": rows}
 
     if WEB_DIR.exists():
         app.mount("/", StaticFiles(directory=WEB_DIR, html=True), name="web")

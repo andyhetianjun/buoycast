@@ -6,9 +6,14 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 SAMPLE_PARQUET = ROOT / "data" / "sample" / "hourly.parquet"
+NNJA_PARQUET = ROOT / "data" / "sample" / "nnja_metar.parquet"
+DRIFTERS_PARQUET = ROOT / "data" / "sample" / "drifters.parquet"
+DRIFTERS_QC_PARQUET = ROOT / "data" / "sample" / "drifters_qc.parquet"
+QC_FLAGS_PARQUET = ROOT / "data" / "sample" / "qc_flags.parquet"
 RAW_DIR = ROOT / "data" / "raw"
 ARTIFACTS = ROOT / "artifacts"
 METRICS_JSON = ARTIFACTS / "metrics.json"
+QC_SUMMARY_JSON = ARTIFACTS / "qc_summary.json"
 WEB_DIR = ROOT / "web"
 
 # Name and position from the NDBC active stations list.

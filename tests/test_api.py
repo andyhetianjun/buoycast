@@ -56,3 +56,18 @@ def test_backtest_lines_up_with_observations(client):
     assert bt["rows"]
     for row in bt["rows"]:
         assert seen[row["valid_time"]] == row["observed"]
+
+
+def test_qc_flags_for_a_window(client):
+    r = client.get("/qc/46005", params={"hours": 48, "end": "2024-08-01T00:00:00Z"})
+    assert r.status_code == 200
+    rows = r.json()["rows"]
+    assert 0 < len(rows) <= 48
+    assert "wvht_spike" in rows[0] and "pres_flat_line" in rows[0]
+    assert all(v in (1, 2, 3, 4, 9) for k, v in rows[0].items() if k != "time")
+
+
+def test_qc_summary_lists_every_test(client):
+    body = client.get("/qc/summary").json()
+    tests = {r["test"] for r in body["stations"]["by_test"]}
+    assert {"gross_range", "spike", "rate_of_change", "flat_line", "gap"} <= tests

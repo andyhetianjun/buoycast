@@ -1,0 +1,2771 @@
+{
+ "stations": {
+  "rows": 117495,
+  "by_test": [
+   {
+    "variable": "wvht",
+    "test": "gross_range",
+    "n_pass": 117495,
+    "n_not_evaluated": 0,
+    "n_suspect": 0,
+    "n_fail": 0,
+    "n_missing": 0
+   },
+   {
+    "variable": "wvht",
+    "test": "spike",
+    "n_pass": 117417,
+    "n_not_evaluated": 65,
+    "n_suspect": 13,
+    "n_fail": 0,
+    "n_missing": 0
+   },
+   {
+    "variable": "wvht",
+    "test": "rate_of_change",
+    "n_pass": 117442,
+    "n_not_evaluated": 45,
+    "n_suspect": 8,
+    "n_fail": 0,
+    "n_missing": 0
+   },
+   {
+    "variable": "wvht",
+    "test": "flat_line",
+    "n_pass": 117494,
+    "n_not_evaluated": 0,
+    "n_suspect": 1,
+    "n_fail": 0,
+    "n_missing": 0
+   },
+   {
+    "variable": "wvht",
+    "test": "gap",
+    "n_pass": 117474,
+    "n_not_evaluated": 0,
+    "n_suspect": 12,
+    "n_fail": 9,
+    "n_missing": 0
+   },
+   {
+    "variable": "wvht",
+    "test": "overall",
+    "n_pass": 117456,
+    "n_not_evaluated": 0,
+    "n_suspect": 30,
+    "n_fail": 9,
+    "n_missing": 0
+   },
+   {
+    "variable": "wspd",
+    "test": "gross_range",
+    "n_pass": 117485,
+    "n_not_evaluated": 0,
+    "n_suspect": 0,
+    "n_fail": 0,
+    "n_missing": 10
+   },
+   {
+    "variable": "wspd",
+    "test": "spike",
+    "n_pass": 117419,
+    "n_not_evaluated": 65,
+    "n_suspect": 1,
+    "n_fail": 0,
+    "n_missing": 10
+   },
+   {
+    "variable": "wspd",
+    "test": "rate_of_change",
+    "n_pass": 117430,
+    "n_not_evaluated": 45,
+    "n_suspect": 10,
+    "n_fail": 0,
+    "n_missing": 10
+   },
+   {
+    "variable": "wspd",
+    "test": "flat_line",
+    "n_pass": 117485,
+    "n_not_evaluated": 0,
+    "n_suspect": 0,
+    "n_fail": 0,
+    "n_missing": 10
+   },
+   {
+    "variable": "wspd",
+    "test": "gap",
+    "n_pass": 117464,
+    "n_not_evaluated": 0,
+    "n_suspect": 12,
+    "n_fail": 9,
+    "n_missing": 10
+   },
+   {
+    "variable": "wspd",
+    "test": "overall",
+    "n_pass": 117454,
+    "n_not_evaluated": 0,
+    "n_suspect": 22,
+    "n_fail": 9,
+    "n_missing": 10
+   },
+   {
+    "variable": "gst",
+    "test": "gross_range",
+    "n_pass": 117485,
+    "n_not_evaluated": 0,
+    "n_suspect": 0,
+    "n_fail": 0,
+    "n_missing": 10
+   },
+   {
+    "variable": "gst",
+    "test": "spike",
+    "n_pass": 117420,
+    "n_not_evaluated": 65,
+    "n_suspect": 0,
+    "n_fail": 0,
+    "n_missing": 10
+   },
+   {
+    "variable": "gst",
+    "test": "rate_of_change",
+    "n_pass": 117437,
+    "n_not_evaluated": 45,
+    "n_suspect": 3,
+    "n_fail": 0,
+    "n_missing": 10
+   },
+   {
+    "variable": "gst",
+    "test": "flat_line",
+    "n_pass": 117485,
+    "n_not_evaluated": 0,
+    "n_suspect": 0,
+    "n_fail": 0,
+    "n_missing": 10
+   },
+   {
+    "variable": "gst",
+    "test": "gap",
+    "n_pass": 117464,
+    "n_not_evaluated": 0,
+    "n_suspect": 12,
+    "n_fail": 9,
+    "n_missing": 10
+   },
+   {
+    "variable": "gst",
+    "test": "overall",
+    "n_pass": 117461,
+    "n_not_evaluated": 0,
+    "n_suspect": 15,
+    "n_fail": 9,
+    "n_missing": 10
+   },
+   {
+    "variable": "dpd",
+    "test": "gross_range",
+    "n_pass": 106720,
+    "n_not_evaluated": 0,
+    "n_suspect": 0,
+    "n_fail": 0,
+    "n_missing": 10775
+   },
+   {
+    "variable": "dpd",
+    "test": "spike",
+    "n_pass": 105546,
+    "n_not_evaluated": 1079,
+    "n_suspect": 90,
+    "n_fail": 5,
+    "n_missing": 10775
+   },
+   {
+    "variable": "dpd",
+    "test": "rate_of_change",
+    "n_pass": 105948,
+    "n_not_evaluated": 686,
+    "n_suspect": 86,
+    "n_fail": 0,
+    "n_missing": 10775
+   },
+   {
+    "variable": "dpd",
+    "test": "flat_line",
+    "n_pass": 106675,
+    "n_not_evaluated": 0,
+    "n_suspect": 45,
+    "n_fail": 0,
+    "n_missing": 10775
+   },
+   {
+    "variable": "dpd",
+    "test": "gap",
+    "n_pass": 106256,
+    "n_not_evaluated": 0,
+    "n_suspect": 421,
+    "n_fail": 43,
+    "n_missing": 10775
+   },
+   {
+    "variable": "dpd",
+    "test": "overall",
+    "n_pass": 106067,
+    "n_not_evaluated": 0,
+    "n_suspect": 605,
+    "n_fail": 48,
+    "n_missing": 10775
+   },
+   {
+    "variable": "pres",
+    "test": "gross_range",
+    "n_pass": 104488,
+    "n_not_evaluated": 0,
+    "n_suspect": 0,
+    "n_fail": 0,
+    "n_missing": 13007
+   },
+   {
+    "variable": "pres",
+    "test": "spike",
+    "n_pass": 104400,
+    "n_not_evaluated": 88,
+    "n_suspect": 0,
+    "n_fail": 0,
+    "n_missing": 13007
+   },
+   {
+    "variable": "pres",
+    "test": "rate_of_change",
+    "n_pass": 104423,
+    "n_not_evaluated": 60,
+    "n_suspect": 5,
+    "n_fail": 0,
+    "n_missing": 13007
+   },
+   {
+    "variable": "pres",
+    "test": "flat_line",
+    "n_pass": 104428,
+    "n_not_evaluated": 0,
+    "n_suspect": 12,
+    "n_fail": 48,
+    "n_missing": 13007
+   },
+   {
+    "variable": "pres",
+    "test": "gap",
+    "n_pass": 104456,
+    "n_not_evaluated": 0,
+    "n_suspect": 20,
+    "n_fail": 12,
+    "n_missing": 13007
+   },
+   {
+    "variable": "pres",
+    "test": "overall",
+    "n_pass": 104391,
+    "n_not_evaluated": 0,
+    "n_suspect": 37,
+    "n_fail": 60,
+    "n_missing": 13007
+   },
+   {
+    "variable": "atmp",
+    "test": "gross_range",
+    "n_pass": 94173,
+    "n_not_evaluated": 0,
+    "n_suspect": 0,
+    "n_fail": 0,
+    "n_missing": 23322
+   },
+   {
+    "variable": "atmp",
+    "test": "spike",
+    "n_pass": 94086,
+    "n_not_evaluated": 87,
+    "n_suspect": 0,
+    "n_fail": 0,
+    "n_missing": 23322
+   },
+   {
+    "variable": "atmp",
+    "test": "rate_of_change",
+    "n_pass": 94113,
+    "n_not_evaluated": 59,
+    "n_suspect": 1,
+    "n_fail": 0,
+    "n_missing": 23322
+   },
+   {
+    "variable": "atmp",
+    "test": "flat_line",
+    "n_pass": 94173,
+    "n_not_evaluated": 0,
+    "n_suspect": 0,
+    "n_fail": 0,
+    "n_missing": 23322
+   },
+   {
+    "variable": "atmp",
+    "test": "gap",
+    "n_pass": 94143,
+    "n_not_evaluated": 0,
+    "n_suspect": 20,
+    "n_fail": 10,
+    "n_missing": 23322
+   },
+   {
+    "variable": "atmp",
+    "test": "overall",
+    "n_pass": 94142,
+    "n_not_evaluated": 0,
+    "n_suspect": 21,
+    "n_fail": 10,
+    "n_missing": 23322
+   },
+   {
+    "variable": "wtmp",
+    "test": "gross_range",
+    "n_pass": 108577,
+    "n_not_evaluated": 0,
+    "n_suspect": 0,
+    "n_fail": 0,
+    "n_missing": 8918
+   },
+   {
+    "variable": "wtmp",
+    "test": "spike",
+    "n_pass": 108447,
+    "n_not_evaluated": 125,
+    "n_suspect": 5,
+    "n_fail": 0,
+    "n_missing": 8918
+   },
+   {
+    "variable": "wtmp",
+    "test": "rate_of_change",
+    "n_pass": 108448,
+    "n_not_evaluated": 90,
+    "n_suspect": 36,
+    "n_fail": 3,
+    "n_missing": 8918
+   },
+   {
+    "variable": "wtmp",
+    "test": "flat_line",
+    "n_pass": 108387,
+    "n_not_evaluated": 0,
+    "n_suspect": 190,
+    "n_fail": 0,
+    "n_missing": 8918
+   },
+   {
+    "variable": "wtmp",
+    "test": "gap",
+    "n_pass": 108531,
+    "n_not_evaluated": 0,
+    "n_suspect": 37,
+    "n_fail": 9,
+    "n_missing": 8918
+   },
+   {
+    "variable": "wtmp",
+    "test": "overall",
+    "n_pass": 108301,
+    "n_not_evaluated": 0,
+    "n_suspect": 264,
+    "n_fail": 12,
+    "n_missing": 8918
+   }
+  ],
+  "by_station": {
+   "44005": [
+    {
+     "variable": "wvht",
+     "test": "gross_range",
+     "n_pass": 19488,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "wvht",
+     "test": "spike",
+     "n_pass": 19481,
+     "n_not_evaluated": 4,
+     "n_suspect": 3,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "wvht",
+     "test": "rate_of_change",
+     "n_pass": 19483,
+     "n_not_evaluated": 2,
+     "n_suspect": 3,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "wvht",
+     "test": "flat_line",
+     "n_pass": 19488,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "wvht",
+     "test": "gap",
+     "n_pass": 19487,
+     "n_not_evaluated": 0,
+     "n_suspect": 1,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "wvht",
+     "test": "overall",
+     "n_pass": 19484,
+     "n_not_evaluated": 0,
+     "n_suspect": 4,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "wspd",
+     "test": "gross_range",
+     "n_pass": 19479,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 9
+    },
+    {
+     "variable": "wspd",
+     "test": "spike",
+     "n_pass": 19474,
+     "n_not_evaluated": 4,
+     "n_suspect": 1,
+     "n_fail": 0,
+     "n_missing": 9
+    },
+    {
+     "variable": "wspd",
+     "test": "rate_of_change",
+     "n_pass": 19471,
+     "n_not_evaluated": 2,
+     "n_suspect": 6,
+     "n_fail": 0,
+     "n_missing": 9
+    },
+    {
+     "variable": "wspd",
+     "test": "flat_line",
+     "n_pass": 19479,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 9
+    },
+    {
+     "variable": "wspd",
+     "test": "gap",
+     "n_pass": 19478,
+     "n_not_evaluated": 0,
+     "n_suspect": 1,
+     "n_fail": 0,
+     "n_missing": 9
+    },
+    {
+     "variable": "wspd",
+     "test": "overall",
+     "n_pass": 19472,
+     "n_not_evaluated": 0,
+     "n_suspect": 7,
+     "n_fail": 0,
+     "n_missing": 9
+    },
+    {
+     "variable": "gst",
+     "test": "gross_range",
+     "n_pass": 19479,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 9
+    },
+    {
+     "variable": "gst",
+     "test": "spike",
+     "n_pass": 19475,
+     "n_not_evaluated": 4,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 9
+    },
+    {
+     "variable": "gst",
+     "test": "rate_of_change",
+     "n_pass": 19475,
+     "n_not_evaluated": 2,
+     "n_suspect": 2,
+     "n_fail": 0,
+     "n_missing": 9
+    },
+    {
+     "variable": "gst",
+     "test": "flat_line",
+     "n_pass": 19479,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 9
+    },
+    {
+     "variable": "gst",
+     "test": "gap",
+     "n_pass": 19478,
+     "n_not_evaluated": 0,
+     "n_suspect": 1,
+     "n_fail": 0,
+     "n_missing": 9
+    },
+    {
+     "variable": "gst",
+     "test": "overall",
+     "n_pass": 19476,
+     "n_not_evaluated": 0,
+     "n_suspect": 3,
+     "n_fail": 0,
+     "n_missing": 9
+    },
+    {
+     "variable": "dpd",
+     "test": "gross_range",
+     "n_pass": 19488,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "dpd",
+     "test": "spike",
+     "n_pass": 19480,
+     "n_not_evaluated": 4,
+     "n_suspect": 4,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "dpd",
+     "test": "rate_of_change",
+     "n_pass": 19484,
+     "n_not_evaluated": 2,
+     "n_suspect": 2,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "dpd",
+     "test": "flat_line",
+     "n_pass": 19488,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "dpd",
+     "test": "gap",
+     "n_pass": 19487,
+     "n_not_evaluated": 0,
+     "n_suspect": 1,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "dpd",
+     "test": "overall",
+     "n_pass": 19482,
+     "n_not_evaluated": 0,
+     "n_suspect": 6,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "pres",
+     "test": "gross_range",
+     "n_pass": 19488,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "pres",
+     "test": "spike",
+     "n_pass": 19484,
+     "n_not_evaluated": 4,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "pres",
+     "test": "rate_of_change",
+     "n_pass": 19486,
+     "n_not_evaluated": 2,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "pres",
+     "test": "flat_line",
+     "n_pass": 19488,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "pres",
+     "test": "gap",
+     "n_pass": 19487,
+     "n_not_evaluated": 0,
+     "n_suspect": 1,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "pres",
+     "test": "overall",
+     "n_pass": 19487,
+     "n_not_evaluated": 0,
+     "n_suspect": 1,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "atmp",
+     "test": "gross_range",
+     "n_pass": 18509,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 979
+    },
+    {
+     "variable": "atmp",
+     "test": "spike",
+     "n_pass": 18501,
+     "n_not_evaluated": 8,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 979
+    },
+    {
+     "variable": "atmp",
+     "test": "rate_of_change",
+     "n_pass": 18505,
+     "n_not_evaluated": 4,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 979
+    },
+    {
+     "variable": "atmp",
+     "test": "flat_line",
+     "n_pass": 18509,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 979
+    },
+    {
+     "variable": "atmp",
+     "test": "gap",
+     "n_pass": 18507,
+     "n_not_evaluated": 0,
+     "n_suspect": 2,
+     "n_fail": 0,
+     "n_missing": 979
+    },
+    {
+     "variable": "atmp",
+     "test": "overall",
+     "n_pass": 18507,
+     "n_not_evaluated": 0,
+     "n_suspect": 2,
+     "n_fail": 0,
+     "n_missing": 979
+    },
+    {
+     "variable": "wtmp",
+     "test": "gross_range",
+     "n_pass": 19475,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 13
+    },
+    {
+     "variable": "wtmp",
+     "test": "spike",
+     "n_pass": 19469,
+     "n_not_evaluated": 6,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 13
+    },
+    {
+     "variable": "wtmp",
+     "test": "rate_of_change",
+     "n_pass": 19471,
+     "n_not_evaluated": 4,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 13
+    },
+    {
+     "variable": "wtmp",
+     "test": "flat_line",
+     "n_pass": 19475,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 13
+    },
+    {
+     "variable": "wtmp",
+     "test": "gap",
+     "n_pass": 19473,
+     "n_not_evaluated": 0,
+     "n_suspect": 2,
+     "n_fail": 0,
+     "n_missing": 13
+    },
+    {
+     "variable": "wtmp",
+     "test": "overall",
+     "n_pass": 19473,
+     "n_not_evaluated": 0,
+     "n_suspect": 2,
+     "n_fail": 0,
+     "n_missing": 13
+    }
+   ],
+   "44027": [
+    {
+     "variable": "wvht",
+     "test": "gross_range",
+     "n_pass": 24233,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "wvht",
+     "test": "spike",
+     "n_pass": 24218,
+     "n_not_evaluated": 12,
+     "n_suspect": 3,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "wvht",
+     "test": "rate_of_change",
+     "n_pass": 24227,
+     "n_not_evaluated": 6,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "wvht",
+     "test": "flat_line",
+     "n_pass": 24233,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "wvht",
+     "test": "gap",
+     "n_pass": 24228,
+     "n_not_evaluated": 0,
+     "n_suspect": 3,
+     "n_fail": 2,
+     "n_missing": 0
+    },
+    {
+     "variable": "wvht",
+     "test": "overall",
+     "n_pass": 24225,
+     "n_not_evaluated": 0,
+     "n_suspect": 6,
+     "n_fail": 2,
+     "n_missing": 0
+    },
+    {
+     "variable": "wspd",
+     "test": "gross_range",
+     "n_pass": 24233,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "wspd",
+     "test": "spike",
+     "n_pass": 24221,
+     "n_not_evaluated": 12,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "wspd",
+     "test": "rate_of_change",
+     "n_pass": 24224,
+     "n_not_evaluated": 6,
+     "n_suspect": 3,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "wspd",
+     "test": "flat_line",
+     "n_pass": 24233,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "wspd",
+     "test": "gap",
+     "n_pass": 24228,
+     "n_not_evaluated": 0,
+     "n_suspect": 3,
+     "n_fail": 2,
+     "n_missing": 0
+    },
+    {
+     "variable": "wspd",
+     "test": "overall",
+     "n_pass": 24225,
+     "n_not_evaluated": 0,
+     "n_suspect": 6,
+     "n_fail": 2,
+     "n_missing": 0
+    },
+    {
+     "variable": "gst",
+     "test": "gross_range",
+     "n_pass": 24233,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "gst",
+     "test": "spike",
+     "n_pass": 24221,
+     "n_not_evaluated": 12,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "gst",
+     "test": "rate_of_change",
+     "n_pass": 24226,
+     "n_not_evaluated": 6,
+     "n_suspect": 1,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "gst",
+     "test": "flat_line",
+     "n_pass": 24233,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "gst",
+     "test": "gap",
+     "n_pass": 24228,
+     "n_not_evaluated": 0,
+     "n_suspect": 3,
+     "n_fail": 2,
+     "n_missing": 0
+    },
+    {
+     "variable": "gst",
+     "test": "overall",
+     "n_pass": 24227,
+     "n_not_evaluated": 0,
+     "n_suspect": 4,
+     "n_fail": 2,
+     "n_missing": 0
+    },
+    {
+     "variable": "dpd",
+     "test": "gross_range",
+     "n_pass": 24128,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 105
+    },
+    {
+     "variable": "dpd",
+     "test": "spike",
+     "n_pass": 24100,
+     "n_not_evaluated": 25,
+     "n_suspect": 3,
+     "n_fail": 0,
+     "n_missing": 105
+    },
+    {
+     "variable": "dpd",
+     "test": "rate_of_change",
+     "n_pass": 24110,
+     "n_not_evaluated": 16,
+     "n_suspect": 2,
+     "n_fail": 0,
+     "n_missing": 105
+    },
+    {
+     "variable": "dpd",
+     "test": "flat_line",
+     "n_pass": 24128,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 105
+    },
+    {
+     "variable": "dpd",
+     "test": "gap",
+     "n_pass": 24119,
+     "n_not_evaluated": 0,
+     "n_suspect": 7,
+     "n_fail": 2,
+     "n_missing": 105
+    },
+    {
+     "variable": "dpd",
+     "test": "overall",
+     "n_pass": 24114,
+     "n_not_evaluated": 0,
+     "n_suspect": 12,
+     "n_fail": 2,
+     "n_missing": 105
+    },
+    {
+     "variable": "pres",
+     "test": "gross_range",
+     "n_pass": 16943,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 7290
+    },
+    {
+     "variable": "pres",
+     "test": "spike",
+     "n_pass": 16928,
+     "n_not_evaluated": 15,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 7290
+    },
+    {
+     "variable": "pres",
+     "test": "rate_of_change",
+     "n_pass": 16934,
+     "n_not_evaluated": 8,
+     "n_suspect": 1,
+     "n_fail": 0,
+     "n_missing": 7290
+    },
+    {
+     "variable": "pres",
+     "test": "flat_line",
+     "n_pass": 16943,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 7290
+    },
+    {
+     "variable": "pres",
+     "test": "gap",
+     "n_pass": 16936,
+     "n_not_evaluated": 0,
+     "n_suspect": 4,
+     "n_fail": 3,
+     "n_missing": 7290
+    },
+    {
+     "variable": "pres",
+     "test": "overall",
+     "n_pass": 16935,
+     "n_not_evaluated": 0,
+     "n_suspect": 5,
+     "n_fail": 3,
+     "n_missing": 7290
+    },
+    {
+     "variable": "atmp",
+     "test": "gross_range",
+     "n_pass": 7623,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 16610
+    },
+    {
+     "variable": "atmp",
+     "test": "spike",
+     "n_pass": 7615,
+     "n_not_evaluated": 8,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 16610
+    },
+    {
+     "variable": "atmp",
+     "test": "rate_of_change",
+     "n_pass": 7619,
+     "n_not_evaluated": 4,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 16610
+    },
+    {
+     "variable": "atmp",
+     "test": "flat_line",
+     "n_pass": 7623,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 16610
+    },
+    {
+     "variable": "atmp",
+     "test": "gap",
+     "n_pass": 7620,
+     "n_not_evaluated": 0,
+     "n_suspect": 2,
+     "n_fail": 1,
+     "n_missing": 16610
+    },
+    {
+     "variable": "atmp",
+     "test": "overall",
+     "n_pass": 7620,
+     "n_not_evaluated": 0,
+     "n_suspect": 2,
+     "n_fail": 1,
+     "n_missing": 16610
+    },
+    {
+     "variable": "wtmp",
+     "test": "gross_range",
+     "n_pass": 24233,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "wtmp",
+     "test": "spike",
+     "n_pass": 24221,
+     "n_not_evaluated": 12,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "wtmp",
+     "test": "rate_of_change",
+     "n_pass": 24227,
+     "n_not_evaluated": 6,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "wtmp",
+     "test": "flat_line",
+     "n_pass": 24233,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "wtmp",
+     "test": "gap",
+     "n_pass": 24228,
+     "n_not_evaluated": 0,
+     "n_suspect": 3,
+     "n_fail": 2,
+     "n_missing": 0
+    },
+    {
+     "variable": "wtmp",
+     "test": "overall",
+     "n_pass": 24228,
+     "n_not_evaluated": 0,
+     "n_suspect": 3,
+     "n_fail": 2,
+     "n_missing": 0
+    }
+   ],
+   "45005": [
+    {
+     "variable": "wvht",
+     "test": "gross_range",
+     "n_pass": 16622,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "wvht",
+     "test": "spike",
+     "n_pass": 16615,
+     "n_not_evaluated": 7,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "wvht",
+     "test": "rate_of_change",
+     "n_pass": 16617,
+     "n_not_evaluated": 5,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "wvht",
+     "test": "flat_line",
+     "n_pass": 16622,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "wvht",
+     "test": "gap",
+     "n_pass": 16620,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 2,
+     "n_missing": 0
+    },
+    {
+     "variable": "wvht",
+     "test": "overall",
+     "n_pass": 16620,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 2,
+     "n_missing": 0
+    },
+    {
+     "variable": "wspd",
+     "test": "gross_range",
+     "n_pass": 16621,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 1
+    },
+    {
+     "variable": "wspd",
+     "test": "spike",
+     "n_pass": 16614,
+     "n_not_evaluated": 7,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 1
+    },
+    {
+     "variable": "wspd",
+     "test": "rate_of_change",
+     "n_pass": 16616,
+     "n_not_evaluated": 5,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 1
+    },
+    {
+     "variable": "wspd",
+     "test": "flat_line",
+     "n_pass": 16621,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 1
+    },
+    {
+     "variable": "wspd",
+     "test": "gap",
+     "n_pass": 16619,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 2,
+     "n_missing": 1
+    },
+    {
+     "variable": "wspd",
+     "test": "overall",
+     "n_pass": 16619,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 2,
+     "n_missing": 1
+    },
+    {
+     "variable": "gst",
+     "test": "gross_range",
+     "n_pass": 16621,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 1
+    },
+    {
+     "variable": "gst",
+     "test": "spike",
+     "n_pass": 16614,
+     "n_not_evaluated": 7,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 1
+    },
+    {
+     "variable": "gst",
+     "test": "rate_of_change",
+     "n_pass": 16616,
+     "n_not_evaluated": 5,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 1
+    },
+    {
+     "variable": "gst",
+     "test": "flat_line",
+     "n_pass": 16621,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 1
+    },
+    {
+     "variable": "gst",
+     "test": "gap",
+     "n_pass": 16619,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 2,
+     "n_missing": 1
+    },
+    {
+     "variable": "gst",
+     "test": "overall",
+     "n_pass": 16619,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 2,
+     "n_missing": 1
+    },
+    {
+     "variable": "dpd",
+     "test": "gross_range",
+     "n_pass": 12055,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 4567
+    },
+    {
+     "variable": "dpd",
+     "test": "spike",
+     "n_pass": 11441,
+     "n_not_evaluated": 549,
+     "n_suspect": 60,
+     "n_fail": 5,
+     "n_missing": 4567
+    },
+    {
+     "variable": "dpd",
+     "test": "rate_of_change",
+     "n_pass": 11627,
+     "n_not_evaluated": 358,
+     "n_suspect": 70,
+     "n_fail": 0,
+     "n_missing": 4567
+    },
+    {
+     "variable": "dpd",
+     "test": "flat_line",
+     "n_pass": 12055,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 4567
+    },
+    {
+     "variable": "dpd",
+     "test": "gap",
+     "n_pass": 11826,
+     "n_not_evaluated": 0,
+     "n_suspect": 217,
+     "n_fail": 12,
+     "n_missing": 4567
+    },
+    {
+     "variable": "dpd",
+     "test": "overall",
+     "n_pass": 11725,
+     "n_not_evaluated": 0,
+     "n_suspect": 313,
+     "n_fail": 17,
+     "n_missing": 4567
+    },
+    {
+     "variable": "pres",
+     "test": "gross_range",
+     "n_pass": 16564,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 58
+    },
+    {
+     "variable": "pres",
+     "test": "spike",
+     "n_pass": 16547,
+     "n_not_evaluated": 17,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 58
+    },
+    {
+     "variable": "pres",
+     "test": "rate_of_change",
+     "n_pass": 16553,
+     "n_not_evaluated": 10,
+     "n_suspect": 1,
+     "n_fail": 0,
+     "n_missing": 58
+    },
+    {
+     "variable": "pres",
+     "test": "flat_line",
+     "n_pass": 16564,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 58
+    },
+    {
+     "variable": "pres",
+     "test": "gap",
+     "n_pass": 16558,
+     "n_not_evaluated": 0,
+     "n_suspect": 4,
+     "n_fail": 2,
+     "n_missing": 58
+    },
+    {
+     "variable": "pres",
+     "test": "overall",
+     "n_pass": 16557,
+     "n_not_evaluated": 0,
+     "n_suspect": 5,
+     "n_fail": 2,
+     "n_missing": 58
+    },
+    {
+     "variable": "atmp",
+     "test": "gross_range",
+     "n_pass": 16564,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 58
+    },
+    {
+     "variable": "atmp",
+     "test": "spike",
+     "n_pass": 16547,
+     "n_not_evaluated": 17,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 58
+    },
+    {
+     "variable": "atmp",
+     "test": "rate_of_change",
+     "n_pass": 16553,
+     "n_not_evaluated": 10,
+     "n_suspect": 1,
+     "n_fail": 0,
+     "n_missing": 58
+    },
+    {
+     "variable": "atmp",
+     "test": "flat_line",
+     "n_pass": 16564,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 58
+    },
+    {
+     "variable": "atmp",
+     "test": "gap",
+     "n_pass": 16558,
+     "n_not_evaluated": 0,
+     "n_suspect": 4,
+     "n_fail": 2,
+     "n_missing": 58
+    },
+    {
+     "variable": "atmp",
+     "test": "overall",
+     "n_pass": 16557,
+     "n_not_evaluated": 0,
+     "n_suspect": 5,
+     "n_fail": 2,
+     "n_missing": 58
+    },
+    {
+     "variable": "wtmp",
+     "test": "gross_range",
+     "n_pass": 16567,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 55
+    },
+    {
+     "variable": "wtmp",
+     "test": "spike",
+     "n_pass": 16553,
+     "n_not_evaluated": 13,
+     "n_suspect": 1,
+     "n_fail": 0,
+     "n_missing": 55
+    },
+    {
+     "variable": "wtmp",
+     "test": "rate_of_change",
+     "n_pass": 16552,
+     "n_not_evaluated": 9,
+     "n_suspect": 5,
+     "n_fail": 1,
+     "n_missing": 55
+    },
+    {
+     "variable": "wtmp",
+     "test": "flat_line",
+     "n_pass": 16567,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 55
+    },
+    {
+     "variable": "wtmp",
+     "test": "gap",
+     "n_pass": 16562,
+     "n_not_evaluated": 0,
+     "n_suspect": 3,
+     "n_fail": 2,
+     "n_missing": 55
+    },
+    {
+     "variable": "wtmp",
+     "test": "overall",
+     "n_pass": 16556,
+     "n_not_evaluated": 0,
+     "n_suspect": 8,
+     "n_fail": 3,
+     "n_missing": 55
+    }
+   ],
+   "45012": [
+    {
+     "variable": "wvht",
+     "test": "gross_range",
+     "n_pass": 17213,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "wvht",
+     "test": "spike",
+     "n_pass": 17205,
+     "n_not_evaluated": 8,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "wvht",
+     "test": "rate_of_change",
+     "n_pass": 17208,
+     "n_not_evaluated": 5,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "wvht",
+     "test": "flat_line",
+     "n_pass": 17212,
+     "n_not_evaluated": 0,
+     "n_suspect": 1,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "wvht",
+     "test": "gap",
+     "n_pass": 17210,
+     "n_not_evaluated": 0,
+     "n_suspect": 1,
+     "n_fail": 2,
+     "n_missing": 0
+    },
+    {
+     "variable": "wvht",
+     "test": "overall",
+     "n_pass": 17209,
+     "n_not_evaluated": 0,
+     "n_suspect": 2,
+     "n_fail": 2,
+     "n_missing": 0
+    },
+    {
+     "variable": "wspd",
+     "test": "gross_range",
+     "n_pass": 17213,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "wspd",
+     "test": "spike",
+     "n_pass": 17205,
+     "n_not_evaluated": 8,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "wspd",
+     "test": "rate_of_change",
+     "n_pass": 17207,
+     "n_not_evaluated": 5,
+     "n_suspect": 1,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "wspd",
+     "test": "flat_line",
+     "n_pass": 17213,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "wspd",
+     "test": "gap",
+     "n_pass": 17210,
+     "n_not_evaluated": 0,
+     "n_suspect": 1,
+     "n_fail": 2,
+     "n_missing": 0
+    },
+    {
+     "variable": "wspd",
+     "test": "overall",
+     "n_pass": 17209,
+     "n_not_evaluated": 0,
+     "n_suspect": 2,
+     "n_fail": 2,
+     "n_missing": 0
+    },
+    {
+     "variable": "gst",
+     "test": "gross_range",
+     "n_pass": 17213,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "gst",
+     "test": "spike",
+     "n_pass": 17205,
+     "n_not_evaluated": 8,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "gst",
+     "test": "rate_of_change",
+     "n_pass": 17208,
+     "n_not_evaluated": 5,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "gst",
+     "test": "flat_line",
+     "n_pass": 17213,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "gst",
+     "test": "gap",
+     "n_pass": 17210,
+     "n_not_evaluated": 0,
+     "n_suspect": 1,
+     "n_fail": 2,
+     "n_missing": 0
+    },
+    {
+     "variable": "gst",
+     "test": "overall",
+     "n_pass": 17210,
+     "n_not_evaluated": 0,
+     "n_suspect": 1,
+     "n_fail": 2,
+     "n_missing": 0
+    },
+    {
+     "variable": "dpd",
+     "test": "gross_range",
+     "n_pass": 11110,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 6103
+    },
+    {
+     "variable": "dpd",
+     "test": "spike",
+     "n_pass": 10643,
+     "n_not_evaluated": 467,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 6103
+    },
+    {
+     "variable": "dpd",
+     "test": "rate_of_change",
+     "n_pass": 10827,
+     "n_not_evaluated": 283,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 6103
+    },
+    {
+     "variable": "dpd",
+     "test": "flat_line",
+     "n_pass": 11110,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 6103
+    },
+    {
+     "variable": "dpd",
+     "test": "gap",
+     "n_pass": 10895,
+     "n_not_evaluated": 0,
+     "n_suspect": 189,
+     "n_fail": 26,
+     "n_missing": 6103
+    },
+    {
+     "variable": "dpd",
+     "test": "overall",
+     "n_pass": 10895,
+     "n_not_evaluated": 0,
+     "n_suspect": 189,
+     "n_fail": 26,
+     "n_missing": 6103
+    },
+    {
+     "variable": "pres",
+     "test": "gross_range",
+     "n_pass": 11554,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 5659
+    },
+    {
+     "variable": "pres",
+     "test": "spike",
+     "n_pass": 11536,
+     "n_not_evaluated": 18,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 5659
+    },
+    {
+     "variable": "pres",
+     "test": "rate_of_change",
+     "n_pass": 11541,
+     "n_not_evaluated": 13,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 5659
+    },
+    {
+     "variable": "pres",
+     "test": "flat_line",
+     "n_pass": 11554,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 5659
+    },
+    {
+     "variable": "pres",
+     "test": "gap",
+     "n_pass": 11546,
+     "n_not_evaluated": 0,
+     "n_suspect": 4,
+     "n_fail": 4,
+     "n_missing": 5659
+    },
+    {
+     "variable": "pres",
+     "test": "overall",
+     "n_pass": 11546,
+     "n_not_evaluated": 0,
+     "n_suspect": 4,
+     "n_fail": 4,
+     "n_missing": 5659
+    },
+    {
+     "variable": "atmp",
+     "test": "gross_range",
+     "n_pass": 11538,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 5675
+    },
+    {
+     "variable": "atmp",
+     "test": "spike",
+     "n_pass": 11518,
+     "n_not_evaluated": 20,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 5675
+    },
+    {
+     "variable": "atmp",
+     "test": "rate_of_change",
+     "n_pass": 11524,
+     "n_not_evaluated": 14,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 5675
+    },
+    {
+     "variable": "atmp",
+     "test": "flat_line",
+     "n_pass": 11538,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 5675
+    },
+    {
+     "variable": "atmp",
+     "test": "gap",
+     "n_pass": 11529,
+     "n_not_evaluated": 0,
+     "n_suspect": 5,
+     "n_fail": 4,
+     "n_missing": 5675
+    },
+    {
+     "variable": "atmp",
+     "test": "overall",
+     "n_pass": 11529,
+     "n_not_evaluated": 0,
+     "n_suspect": 5,
+     "n_fail": 4,
+     "n_missing": 5675
+    },
+    {
+     "variable": "wtmp",
+     "test": "gross_range",
+     "n_pass": 17155,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 58
+    },
+    {
+     "variable": "wtmp",
+     "test": "spike",
+     "n_pass": 17139,
+     "n_not_evaluated": 12,
+     "n_suspect": 4,
+     "n_fail": 0,
+     "n_missing": 58
+    },
+    {
+     "variable": "wtmp",
+     "test": "rate_of_change",
+     "n_pass": 17112,
+     "n_not_evaluated": 10,
+     "n_suspect": 31,
+     "n_fail": 2,
+     "n_missing": 58
+    },
+    {
+     "variable": "wtmp",
+     "test": "flat_line",
+     "n_pass": 17155,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 58
+    },
+    {
+     "variable": "wtmp",
+     "test": "gap",
+     "n_pass": 17150,
+     "n_not_evaluated": 0,
+     "n_suspect": 3,
+     "n_fail": 2,
+     "n_missing": 58
+    },
+    {
+     "variable": "wtmp",
+     "test": "overall",
+     "n_pass": 17116,
+     "n_not_evaluated": 0,
+     "n_suspect": 35,
+     "n_fail": 4,
+     "n_missing": 58
+    }
+   ],
+   "46005": [
+    {
+     "variable": "wvht",
+     "test": "gross_range",
+     "n_pass": 20538,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "wvht",
+     "test": "spike",
+     "n_pass": 20503,
+     "n_not_evaluated": 30,
+     "n_suspect": 5,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "wvht",
+     "test": "rate_of_change",
+     "n_pass": 20511,
+     "n_not_evaluated": 25,
+     "n_suspect": 2,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "wvht",
+     "test": "flat_line",
+     "n_pass": 20538,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "wvht",
+     "test": "gap",
+     "n_pass": 20529,
+     "n_not_evaluated": 0,
+     "n_suspect": 7,
+     "n_fail": 2,
+     "n_missing": 0
+    },
+    {
+     "variable": "wvht",
+     "test": "overall",
+     "n_pass": 20522,
+     "n_not_evaluated": 0,
+     "n_suspect": 14,
+     "n_fail": 2,
+     "n_missing": 0
+    },
+    {
+     "variable": "wspd",
+     "test": "gross_range",
+     "n_pass": 20538,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "wspd",
+     "test": "spike",
+     "n_pass": 20508,
+     "n_not_evaluated": 30,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "wspd",
+     "test": "rate_of_change",
+     "n_pass": 20513,
+     "n_not_evaluated": 25,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "wspd",
+     "test": "flat_line",
+     "n_pass": 20538,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "wspd",
+     "test": "gap",
+     "n_pass": 20529,
+     "n_not_evaluated": 0,
+     "n_suspect": 7,
+     "n_fail": 2,
+     "n_missing": 0
+    },
+    {
+     "variable": "wspd",
+     "test": "overall",
+     "n_pass": 20529,
+     "n_not_evaluated": 0,
+     "n_suspect": 7,
+     "n_fail": 2,
+     "n_missing": 0
+    },
+    {
+     "variable": "gst",
+     "test": "gross_range",
+     "n_pass": 20538,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "gst",
+     "test": "spike",
+     "n_pass": 20508,
+     "n_not_evaluated": 30,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "gst",
+     "test": "rate_of_change",
+     "n_pass": 20513,
+     "n_not_evaluated": 25,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "gst",
+     "test": "flat_line",
+     "n_pass": 20538,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "gst",
+     "test": "gap",
+     "n_pass": 20529,
+     "n_not_evaluated": 0,
+     "n_suspect": 7,
+     "n_fail": 2,
+     "n_missing": 0
+    },
+    {
+     "variable": "gst",
+     "test": "overall",
+     "n_pass": 20529,
+     "n_not_evaluated": 0,
+     "n_suspect": 7,
+     "n_fail": 2,
+     "n_missing": 0
+    },
+    {
+     "variable": "dpd",
+     "test": "gross_range",
+     "n_pass": 20538,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "dpd",
+     "test": "spike",
+     "n_pass": 20487,
+     "n_not_evaluated": 30,
+     "n_suspect": 21,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "dpd",
+     "test": "rate_of_change",
+     "n_pass": 20505,
+     "n_not_evaluated": 25,
+     "n_suspect": 8,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "dpd",
+     "test": "flat_line",
+     "n_pass": 20499,
+     "n_not_evaluated": 0,
+     "n_suspect": 39,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "dpd",
+     "test": "gap",
+     "n_pass": 20529,
+     "n_not_evaluated": 0,
+     "n_suspect": 7,
+     "n_fail": 2,
+     "n_missing": 0
+    },
+    {
+     "variable": "dpd",
+     "test": "overall",
+     "n_pass": 20463,
+     "n_not_evaluated": 0,
+     "n_suspect": 73,
+     "n_fail": 2,
+     "n_missing": 0
+    },
+    {
+     "variable": "pres",
+     "test": "gross_range",
+     "n_pass": 20538,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "pres",
+     "test": "spike",
+     "n_pass": 20508,
+     "n_not_evaluated": 30,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "pres",
+     "test": "rate_of_change",
+     "n_pass": 20510,
+     "n_not_evaluated": 25,
+     "n_suspect": 3,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "pres",
+     "test": "flat_line",
+     "n_pass": 20478,
+     "n_not_evaluated": 0,
+     "n_suspect": 12,
+     "n_fail": 48,
+     "n_missing": 0
+    },
+    {
+     "variable": "pres",
+     "test": "gap",
+     "n_pass": 20529,
+     "n_not_evaluated": 0,
+     "n_suspect": 7,
+     "n_fail": 2,
+     "n_missing": 0
+    },
+    {
+     "variable": "pres",
+     "test": "overall",
+     "n_pass": 20466,
+     "n_not_evaluated": 0,
+     "n_suspect": 22,
+     "n_fail": 50,
+     "n_missing": 0
+    },
+    {
+     "variable": "atmp",
+     "test": "gross_range",
+     "n_pass": 20538,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "atmp",
+     "test": "spike",
+     "n_pass": 20508,
+     "n_not_evaluated": 30,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "atmp",
+     "test": "rate_of_change",
+     "n_pass": 20513,
+     "n_not_evaluated": 25,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "atmp",
+     "test": "flat_line",
+     "n_pass": 20538,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "atmp",
+     "test": "gap",
+     "n_pass": 20529,
+     "n_not_evaluated": 0,
+     "n_suspect": 7,
+     "n_fail": 2,
+     "n_missing": 0
+    },
+    {
+     "variable": "atmp",
+     "test": "overall",
+     "n_pass": 20529,
+     "n_not_evaluated": 0,
+     "n_suspect": 7,
+     "n_fail": 2,
+     "n_missing": 0
+    },
+    {
+     "variable": "wtmp",
+     "test": "gross_range",
+     "n_pass": 20203,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 335
+    },
+    {
+     "variable": "wtmp",
+     "test": "spike",
+     "n_pass": 20125,
+     "n_not_evaluated": 78,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 335
+    },
+    {
+     "variable": "wtmp",
+     "test": "rate_of_change",
+     "n_pass": 20144,
+     "n_not_evaluated": 59,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 335
+    },
+    {
+     "variable": "wtmp",
+     "test": "flat_line",
+     "n_pass": 20015,
+     "n_not_evaluated": 0,
+     "n_suspect": 188,
+     "n_fail": 0,
+     "n_missing": 335
+    },
+    {
+     "variable": "wtmp",
+     "test": "gap",
+     "n_pass": 20175,
+     "n_not_evaluated": 0,
+     "n_suspect": 26,
+     "n_fail": 2,
+     "n_missing": 335
+    },
+    {
+     "variable": "wtmp",
+     "test": "overall",
+     "n_pass": 19987,
+     "n_not_evaluated": 0,
+     "n_suspect": 214,
+     "n_fail": 2,
+     "n_missing": 335
+    }
+   ],
+   "46041": [
+    {
+     "variable": "wvht",
+     "test": "gross_range",
+     "n_pass": 19401,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "wvht",
+     "test": "spike",
+     "n_pass": 19395,
+     "n_not_evaluated": 4,
+     "n_suspect": 2,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "wvht",
+     "test": "rate_of_change",
+     "n_pass": 19396,
+     "n_not_evaluated": 2,
+     "n_suspect": 3,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "wvht",
+     "test": "flat_line",
+     "n_pass": 19401,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "wvht",
+     "test": "gap",
+     "n_pass": 19400,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 1,
+     "n_missing": 0
+    },
+    {
+     "variable": "wvht",
+     "test": "overall",
+     "n_pass": 19396,
+     "n_not_evaluated": 0,
+     "n_suspect": 4,
+     "n_fail": 1,
+     "n_missing": 0
+    },
+    {
+     "variable": "wspd",
+     "test": "gross_range",
+     "n_pass": 19401,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "wspd",
+     "test": "spike",
+     "n_pass": 19397,
+     "n_not_evaluated": 4,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "wspd",
+     "test": "rate_of_change",
+     "n_pass": 19399,
+     "n_not_evaluated": 2,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "wspd",
+     "test": "flat_line",
+     "n_pass": 19401,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "wspd",
+     "test": "gap",
+     "n_pass": 19400,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 1,
+     "n_missing": 0
+    },
+    {
+     "variable": "wspd",
+     "test": "overall",
+     "n_pass": 19400,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 1,
+     "n_missing": 0
+    },
+    {
+     "variable": "gst",
+     "test": "gross_range",
+     "n_pass": 19401,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "gst",
+     "test": "spike",
+     "n_pass": 19397,
+     "n_not_evaluated": 4,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "gst",
+     "test": "rate_of_change",
+     "n_pass": 19399,
+     "n_not_evaluated": 2,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "gst",
+     "test": "flat_line",
+     "n_pass": 19401,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "gst",
+     "test": "gap",
+     "n_pass": 19400,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 1,
+     "n_missing": 0
+    },
+    {
+     "variable": "gst",
+     "test": "overall",
+     "n_pass": 19400,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 1,
+     "n_missing": 0
+    },
+    {
+     "variable": "dpd",
+     "test": "gross_range",
+     "n_pass": 19401,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "dpd",
+     "test": "spike",
+     "n_pass": 19395,
+     "n_not_evaluated": 4,
+     "n_suspect": 2,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "dpd",
+     "test": "rate_of_change",
+     "n_pass": 19395,
+     "n_not_evaluated": 2,
+     "n_suspect": 4,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "dpd",
+     "test": "flat_line",
+     "n_pass": 19395,
+     "n_not_evaluated": 0,
+     "n_suspect": 6,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "dpd",
+     "test": "gap",
+     "n_pass": 19400,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 1,
+     "n_missing": 0
+    },
+    {
+     "variable": "dpd",
+     "test": "overall",
+     "n_pass": 19388,
+     "n_not_evaluated": 0,
+     "n_suspect": 12,
+     "n_fail": 1,
+     "n_missing": 0
+    },
+    {
+     "variable": "pres",
+     "test": "gross_range",
+     "n_pass": 19401,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "pres",
+     "test": "spike",
+     "n_pass": 19397,
+     "n_not_evaluated": 4,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "pres",
+     "test": "rate_of_change",
+     "n_pass": 19399,
+     "n_not_evaluated": 2,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "pres",
+     "test": "flat_line",
+     "n_pass": 19401,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "pres",
+     "test": "gap",
+     "n_pass": 19400,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 1,
+     "n_missing": 0
+    },
+    {
+     "variable": "pres",
+     "test": "overall",
+     "n_pass": 19400,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 1,
+     "n_missing": 0
+    },
+    {
+     "variable": "atmp",
+     "test": "gross_range",
+     "n_pass": 19401,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "atmp",
+     "test": "spike",
+     "n_pass": 19397,
+     "n_not_evaluated": 4,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "atmp",
+     "test": "rate_of_change",
+     "n_pass": 19399,
+     "n_not_evaluated": 2,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "atmp",
+     "test": "flat_line",
+     "n_pass": 19401,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 0
+    },
+    {
+     "variable": "atmp",
+     "test": "gap",
+     "n_pass": 19400,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 1,
+     "n_missing": 0
+    },
+    {
+     "variable": "atmp",
+     "test": "overall",
+     "n_pass": 19400,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 1,
+     "n_missing": 0
+    },
+    {
+     "variable": "wtmp",
+     "test": "gross_range",
+     "n_pass": 10944,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 8457
+    },
+    {
+     "variable": "wtmp",
+     "test": "spike",
+     "n_pass": 10940,
+     "n_not_evaluated": 4,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 8457
+    },
+    {
+     "variable": "wtmp",
+     "test": "rate_of_change",
+     "n_pass": 10942,
+     "n_not_evaluated": 2,
+     "n_suspect": 0,
+     "n_fail": 0,
+     "n_missing": 8457
+    },
+    {
+     "variable": "wtmp",
+     "test": "flat_line",
+     "n_pass": 10942,
+     "n_not_evaluated": 0,
+     "n_suspect": 2,
+     "n_fail": 0,
+     "n_missing": 8457
+    },
+    {
+     "variable": "wtmp",
+     "test": "gap",
+     "n_pass": 10943,
+     "n_not_evaluated": 0,
+     "n_suspect": 0,
+     "n_fail": 1,
+     "n_missing": 8457
+    },
+    {
+     "variable": "wtmp",
+     "test": "overall",
+     "n_pass": 10941,
+     "n_not_evaluated": 0,
+     "n_suspect": 2,
+     "n_fail": 1,
+     "n_missing": 8457
+    }
+   ]
+  }
+ },
+ "drifters": {
+  "rows": 3680,
+  "by_test": [
+   {
+    "variable": "sst",
+    "test": "gross_range",
+    "n_pass": 3680,
+    "n_not_evaluated": 0,
+    "n_suspect": 0,
+    "n_fail": 0,
+    "n_missing": 0
+   },
+   {
+    "variable": "sst",
+    "test": "spike",
+    "n_pass": 3670,
+    "n_not_evaluated": 10,
+    "n_suspect": 0,
+    "n_fail": 0,
+    "n_missing": 0
+   },
+   {
+    "variable": "sst",
+    "test": "rate_of_change",
+    "n_pass": 3675,
+    "n_not_evaluated": 5,
+    "n_suspect": 0,
+    "n_fail": 0,
+    "n_missing": 0
+   },
+   {
+    "variable": "sst",
+    "test": "flat_line",
+    "n_pass": 3680,
+    "n_not_evaluated": 0,
+    "n_suspect": 0,
+    "n_fail": 0,
+    "n_missing": 0
+   },
+   {
+    "variable": "sst",
+    "test": "gap",
+    "n_pass": 3680,
+    "n_not_evaluated": 0,
+    "n_suspect": 0,
+    "n_fail": 0,
+    "n_missing": 0
+   },
+   {
+    "variable": "sst",
+    "test": "overall",
+    "n_pass": 3680,
+    "n_not_evaluated": 0,
+    "n_suspect": 0,
+    "n_fail": 0,
+    "n_missing": 0
+   },
+   {
+    "variable": "position",
+    "test": "location_range",
+    "n_pass": 3680,
+    "n_not_evaluated": 0,
+    "n_suspect": 0,
+    "n_fail": 0,
+    "n_missing": 0
+   },
+   {
+    "variable": "position",
+    "test": "track_speed",
+    "n_pass": 3675,
+    "n_not_evaluated": 5,
+    "n_suspect": 0,
+    "n_fail": 0,
+    "n_missing": 0
+   }
+  ]
+ },
+ "injection_test": {
+  "drifter_planted": {
+   "position_jump": 72,
+   "sst_spike": 68
+  },
+  "drifter_detected": {
+   "position_jump": 72,
+   "sst_spike": 68
+  },
+  "planted": {
+   "spike": 674,
+   "flat_line": 656,
+   "out_of_range": 663
+  },
+  "detected": {
+   "spike": 673,
+   "flat_line": 656,
+   "out_of_range": 663
+  },
+  "recall": {
+   "spike": 0.999,
+   "flat_line": 1.0,
+   "out_of_range": 1.0
+  },
+  "untouched_readings_flagged": 450,
+  "untouched_readings_checked": 949149
+ }
+}

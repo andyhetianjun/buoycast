@@ -21,6 +21,9 @@ dependencies = [
 buoycast-download = "buoycast.download:main"
 buoycast-train = "buoycast.train:main"
 buoycast-serve = "buoycast.api:serve"
+buoycast-nnja = "buoycast.nnja:main"
+buoycast-drifters = "buoycast.drifters:main"
+buoycast-qc = "buoycast.qc_run:main"
 
 [build-system]
 requires = ["uv_build>=0.12.19,<0.13.0"]

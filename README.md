@@ -13,7 +13,7 @@ NOAA National Data Buoy Center (NDBC), historical standard meteorological data, 
 | Station | Where | Region |
 |---|---|---|
 | 44005 | Gulf of Maine | Atlantic, near Canadian waters |
-| 44027 | Jonesport, Maine | Atlantic, Bay of Fundy side |
+| 44027 | Jonesport, Maine | Atlantic, Maine coast |
 | 45005 | West Erie | Great Lakes |
 | 45012 | East Lake Ontario | Great Lakes |
 | 46041 | Cape Elizabeth, Washington | Pacific Northwest |
@@ -24,10 +24,10 @@ Years 2022 to 2024. I looked for a working public DFO/MEDS endpoint but went wit
 Things in the data worth knowing:
 
 - Missing values are written as 99, 999 or 9999 depending on the column. The parser turns these into NaN, so a missing wave reading never becomes a 99 m wave.
-- Lake buoys report every 10 minutes and ocean buoys every 30 or 60 minutes, so everything is averaged to hourly. Wind direction is averaged as a vector.
-- Some sensors have long gaps. The air temperature at 44027 and 46041 is missing for most of 2024, so I left air and water temperature out of the features instead of throwing away those stations.
+- Stations report at different intervals (some every 10 minutes, some hourly), so everything is averaged to hourly. Wind direction is averaged as a vector.
+- Some sensors have long gaps. Air temperature at 44027 and water temperature at 46041 are missing for most of 2024, so I left air and water temperature out of the features instead of throwing away those stations.
 - 44005 has data only until 2024-03-25 in the NDBC historical folder, so it has no test rows.
-- The Great Lakes buoys are taken in over winter, so they have no winter data.
+- The Great Lakes buoys start reporting in April or May each year, so they have no winter data.
 
 ## How it works
 
@@ -115,10 +115,10 @@ Docker: `docker build -t buoycast . && docker run -p 8000:8000 buoycast`. I wrot
 
 ## What I learned / limitations
 
-- Persistence is hard to beat by much. At 3 hours, waves mostly do not change, so even the best model only cuts MAE from 0.163 m to 0.133 m. A 3 cm difference is about the size of the sensor's resolution at calm stations, so the practical gain is small.
-- The MLP is better than linear regression in every row of the tables, but the gap (about 0.014 m at 3 h, 0.025 m at 6 h) is smaller than the gain of linear regression over persistence. I did not try other architectures (GRU, 1D-CNN) or tune hyperparameters, so I cannot say the MLP is the best choice, only that it beat what I compared against.
+- Persistence is hard to beat by much. At 3 hours, waves mostly do not change, so even the best model only cuts MAE from 0.163 m to 0.133 m. A 3 cm difference is small in practice at calm stations.
+- The MLP is better than linear regression in every row of the tables (by about 0.014 m MAE at 3 h and 0.025 m at 6 h), a smaller gap than the one between persistence and the MLP. I did not try other architectures (GRU, 1D-CNN) or tune hyperparameters, so I cannot say the MLP is the best choice, only that it beat what I compared against.
 - The seed-to-seed spread is tiny (see the +/- values), so the MLP vs linear difference is not seed noise. But there is one test period and one split. Six months of data from five stations is not enough to claim this holds in other seasons.
-- The test months are July to December. There is no winter, and the Great Lakes buoys are out of the water for part of the year, so the hardest conditions are underrepresented. Errors grow quickly with wave height (over 3 m the 6 h MAE is 0.55 m), and that is exactly where a forecast matters most. The model does reduce error there too, but remember that grouping by the observed height conditions on the outcome, so those rows are a way to look at errors, not a fair measure of skill.
+- The test months are July to December. There is no winter, and the Great Lakes buoys have no winter data, so the hardest conditions are underrepresented. Errors grow quickly with wave height (over 3 m the 6 h MAE is 0.55 m), and that is exactly where a forecast matters most. The model does reduce error there too, but remember that grouping by the observed height conditions on the outcome, so those rows are a way to look at errors, not a fair measure of skill.
 - The model only sees past buoy readings. Future waves depend on wind that has not happened yet, and I do not use any weather forecast. That puts a hard limit on how much better a buoy-only model can get, especially at 6 hours.
 - Station and region effects are only handled by a one-hot station id. I did not check how the model does on a station it never saw in training.
 - Model selection used only the validation months for early stopping. The test period was looked at once per code change while I was building this, so I would not call the test numbers fully untouched.
